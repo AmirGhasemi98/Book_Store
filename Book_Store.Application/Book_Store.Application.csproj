@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Book_Store.Domain\Book_Store.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Common\" />
-  </ItemGroup>
-
 </Project>
