@@ -18,6 +18,28 @@
   <ItemGroup>
     <Folder Include="Features\Authors\Handlers\Commands\" />
     <Folder Include="Features\Authors\Requests\Commands\" />
+    <Folder Include="Features\Books\Handlers\Commands\" />
+    <Folder Include="Features\Books\Handlers\Queries\" />
+    <Folder Include="Features\Books\Requests\Commands\" />
+    <Folder Include="Features\Books\Requests\Queries\" />
+    <Folder Include="Features\Categories\Handlers\Commands\" />
+    <Folder Include="Features\Categories\Handlers\Queries\" />
+    <Folder Include="Features\Categories\Requests\Commands\" />
+    <Folder Include="Features\Categories\Requests\Queries\" />
+    <Folder Include="Features\Languages\Handlers\Commands\" />
+    <Folder Include="Features\Languages\Handlers\Queries\" />
+    <Folder Include="Features\Languages\Requests\Commands\" />
+    <Folder Include="Features\Languages\Requests\Queries\" />
+    <Folder Include="Features\NewFolder\Handlers\Commands\" />
+    <Folder Include="Features\NewFolder\Handlers\Queries\" />
+    <Folder Include="Features\NewFolder\Requests\Commands\" />
+    <Folder Include="Features\NewFolder\Requests\Queries\" />
+    <Folder Include="Features\Orders\Handlers\Commands\" />
+    <Folder Include="Features\Orders\Handlers\Queries\" />
+    <Folder Include="Features\Orders\Requests\Commands\" />
+    <Folder Include="Features\Orders\Requests\Queries\" />
+    <Folder Include="Features\Publishers\Handlers\Commands\" />
+    <Folder Include="Features\Publishers\Requests\Commands\" />
   </ItemGroup>
 
 </Project>
