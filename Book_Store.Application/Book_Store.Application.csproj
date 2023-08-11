@@ -19,9 +19,7 @@
     <Folder Include="Features\Authors\Handlers\Commands\" />
     <Folder Include="Features\Authors\Requests\Commands\" />
     <Folder Include="Features\Books\Handlers\Commands\" />
-    <Folder Include="Features\Books\Handlers\Queries\" />
     <Folder Include="Features\Books\Requests\Commands\" />
-    <Folder Include="Features\Books\Requests\Queries\" />
     <Folder Include="Features\Categories\Handlers\Commands\" />
     <Folder Include="Features\Categories\Requests\Commands\" />
     <Folder Include="Features\Languages\Handlers\Commands\" />
