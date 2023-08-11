@@ -1,8 +1,6 @@
-﻿using Book_Store.Domain.Common;
-
-namespace Book_Store.Domain.Entites
+﻿namespace Book_Store.Application.DTOs.Book
 {
-    public class Book : BaseDomainEntity
+    public class CreateBookDto
     {
         public string Title { get; set; }
 
@@ -14,23 +12,12 @@ namespace Book_Store.Domain.Entites
 
         public byte[] Image { get; set; }
 
-        #region Relations
-
         public int CategoryId { get; set; }
-
-        public Category Category { get; set; }
 
         public int AuthorId { get; set; }
 
-        public Author Author { get; set; }
-
         public int PublisherId { get; set; }
 
-        public Publisher Publisher { get; set; }
-
-
-
-        #endregion
 
     }
 }

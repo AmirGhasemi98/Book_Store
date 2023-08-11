@@ -21,7 +21,7 @@ namespace Book_Store.Application.DTOs.Book
 
         public int Inventory { get; set; }
 
-        public byte Image { get; set; }
+        public byte[] Image { get; set; }
 
         public int CategoryId { get; set; }
 
