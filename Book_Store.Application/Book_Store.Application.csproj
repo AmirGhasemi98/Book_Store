@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Books\Requests\Commands\" />
     <Folder Include="Features\Languages\Handlers\Commands\" />
     <Folder Include="Features\Languages\Handlers\Queries\" />
     <Folder Include="Features\Languages\Requests\Commands\" />
