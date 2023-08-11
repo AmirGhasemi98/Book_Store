@@ -1,4 +1,4 @@
-﻿using Book_Store.Application.DTOs;
+﻿using Book_Store.Application.DTOs.Book;
 using MediatR;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Book_Store.Application.DTOs;
+using Book_Store.Application.DTOs.Author;
+using Book_Store.Application.DTOs.Book;
+using Book_Store.Application.DTOs.Publisher;
 using Book_Store.Domain.Entites;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Book_Store.Application.DTOs
+namespace Book_Store.Application.DTOs.Author
 {
     public class AuthorDto : BaseDto
     {

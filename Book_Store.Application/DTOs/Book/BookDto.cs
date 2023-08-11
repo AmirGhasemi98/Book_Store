@@ -1,4 +1,7 @@
-﻿using Book_Store.Application.DTOs.Common;
+﻿using Book_Store.Application.DTOs.Author;
+using Book_Store.Application.DTOs.Category;
+using Book_Store.Application.DTOs.Common;
+using Book_Store.Application.DTOs.Publisher;
 using Book_Store.Domain.Entites;
 using System;
 using System.Collections.Generic;
@@ -6,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Book_Store.Application.DTOs
+namespace Book_Store.Application.DTOs.Book
 {
     public class BookDto : BaseDto
     {
