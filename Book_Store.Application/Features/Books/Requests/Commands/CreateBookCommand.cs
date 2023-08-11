@@ -10,6 +10,6 @@ namespace Book_Store.Application.Features.Books.Requests.Commands
 {
     public class CreateBookCommand : IRequest<int>
     {
-        public CreateBookCommand BookDto { get; set; }
+        public BookDto BookDto { get; set; }
     }
 }
