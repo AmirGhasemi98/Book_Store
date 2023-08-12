@@ -1,18 +1,26 @@
-﻿using Book_Store.Application.Features.Categories.Requests.Commands;
+﻿using AutoMapper;
+using Book_Store.Application.Features.Categories.Requests.Commands;
+using Book_Store.Application.Persistence.Contracts;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Application.Features.Categories.Handlers.Commands
 {
     public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
     {
-        public Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
+
+        public DeleteCategoryCommandHandler(ICategoryRepository categoryRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<Unit> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+        {
+            var catrgory = await _categoryRepository.Get(request.Id);
+            await _categoryRepository.Delete(catrgory);
+            return Unit.Value;
         }
     }
 }
