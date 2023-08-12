@@ -11,11 +11,5 @@
         public DateTime LastModifiedDate { get; set; }
 
         public string LastModifiedBy { get; set; }
-
-        public string DeletedBy { get; set; }
-
-        public DateTime DateDeleted { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }
