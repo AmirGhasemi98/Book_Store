@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Book_Store.Application.DTOs.Author.Validators;
 using Book_Store.Application.Features.Authors.Requests.Commands;
 using Book_Store.Application.Persistence.Contracts;
 using Book_Store.Domain.Entites;
@@ -19,6 +20,12 @@ namespace Book_Store.Application.Features.Authors.Handlers.Commands
 
         public async Task<int> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
+            var validator = new CreateAuthorDtoValidator();
+            var validationResult = await validator.ValidateAsync(request.AuthorDto);
+
+            if (!validationResult.IsValid)
+                throw new Exception();
+
             var author = _mapper.Map<Author>(request.AuthorDto);
             author = await _authorRepository.Add(author);
             return author.Id;

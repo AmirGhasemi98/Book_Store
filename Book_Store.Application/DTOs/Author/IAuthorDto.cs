@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.Author
 {
-    public class CreateAuthorDto : IAuthorDto
+    public interface IAuthorDto
     {
         public string FirstName { get; set; }
 

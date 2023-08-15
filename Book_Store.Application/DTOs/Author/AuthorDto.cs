@@ -1,13 +1,8 @@
 ﻿using Book_Store.Application.DTOs.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Application.DTOs.Author
 {
-    public class AuthorDto : BaseDto
+    public class AuthorDto : BaseDto, IAuthorDto
     {
         public string FirstName { get; set; }
 
