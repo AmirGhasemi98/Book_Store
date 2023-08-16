@@ -5,6 +5,6 @@ namespace Book_Store.Application.Features.Books.Requests.Commands
 {
     public class UpdateBookCommand : IRequest<Unit>
     {
-        public BookDto BookDto { get; set; }
+        public UpdateBookDto UpdateBookDto { get; set; }
     }
 }

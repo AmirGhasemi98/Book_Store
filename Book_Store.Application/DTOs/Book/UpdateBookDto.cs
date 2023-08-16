@@ -1,6 +1,8 @@
-﻿namespace Book_Store.Application.DTOs.Book
+﻿using Book_Store.Application.DTOs.Common;
+
+namespace Book_Store.Application.DTOs.Book
 {
-    public class CreateBookDto : IBookDto
+    public class UpdateBookDto : BaseDto, IBookDto
     {
         public string Title { get; set; }
 
@@ -17,7 +19,5 @@
         public int AuthorId { get; set; }
 
         public int PublisherId { get; set; }
-
-
     }
 }

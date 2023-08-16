@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.Book
 {
-    public class CreateBookDto : IBookDto
+    public interface IBookDto
     {
         public string Title { get; set; }
 
@@ -17,7 +17,5 @@
         public int AuthorId { get; set; }
 
         public int PublisherId { get; set; }
-
-
     }
 }
