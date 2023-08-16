@@ -20,13 +20,17 @@ namespace Book_Store.Application.Features.Authors.Handlers.Commands
 
         public async Task<int> Handle(CreateAuthorCommand request, CancellationToken cancellationToken)
         {
+            #region Validation
+          
             var validator = new CreateAuthorDtoValidator();
-            var validationResult = await validator.ValidateAsync(request.AuthorDto);
+            var validationResult = await validator.ValidateAsync(request.CreateAuthorDto);
 
             if (!validationResult.IsValid)
                 throw new Exception();
 
-            var author = _mapper.Map<Author>(request.AuthorDto);
+            #endregion
+
+            var author = _mapper.Map<Author>(request.CreateAuthorDto);
             author = await _authorRepository.Add(author);
             return author.Id;
         }

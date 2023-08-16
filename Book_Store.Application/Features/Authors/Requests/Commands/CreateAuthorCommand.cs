@@ -5,6 +5,6 @@ namespace Book_Store.Application.Features.Authors.Requests.Commands
 {
     public class CreateAuthorCommand : IRequest<int>
     {
-        public CreateAuthorDto AuthorDto { get; set; }
+        public CreateAuthorDto CreateAuthorDto { get; set; }
     }
 }
