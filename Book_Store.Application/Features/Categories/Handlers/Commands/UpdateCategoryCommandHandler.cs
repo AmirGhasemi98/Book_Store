@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Book_Store.Application.DTOs.Category.Validators;
 using Book_Store.Application.Features.Categories.Requests.Commands;
 using Book_Store.Application.Persistence.Contracts;
 using MediatR;
@@ -18,8 +19,18 @@ namespace Book_Store.Application.Features.Categories.Handlers.Commands
 
         public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.Get(request.CategoryDto.Id);
-            _mapper.Map(request.CategoryDto, category);
+            #region Validation
+
+            var validator = new UpdateCategoryDtoValidator(_categoryRepository);
+            var validationResult = await validator.ValidateAsync(request.UpdateCategoryDto);
+
+            if (!validationResult.IsValid)
+                throw new Exception();
+
+            #endregion
+
+            var category = await _categoryRepository.Get(request.UpdateCategoryDto.Id);
+            _mapper.Map(request.UpdateCategoryDto, category);
             await _categoryRepository.Update(category);
             return Unit.Value;
 

@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.Category
 {
-    public class CreateCategoryDto : ICategoryDto
+    public interface ICategoryDto
     {
         public string Title { get; set; }
 
