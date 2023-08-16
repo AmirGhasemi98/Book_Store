@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using Book_Store.Application.DTOs.Author;
 using Book_Store.Application.DTOs.Book;
+using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Publisher;
 using Book_Store.Domain.Entites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Application.Profiles
 {
@@ -15,10 +11,31 @@ namespace Book_Store.Application.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Book,BookDto>().ReverseMap();
-            CreateMap<Author,AuthorDto>().ReverseMap();
-            CreateMap<Category,BookDto>().ReverseMap();
-            CreateMap<Publisher,PublisherDto>().ReverseMap();
+            #region Book
+            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<Book, CreateBookDto>().ReverseMap();
+            CreateMap<Book, UpdateBookDto>().ReverseMap();
+
+            #endregion
+
+            #region Author
+            CreateMap<Author, AuthorDto>().ReverseMap();
+            CreateMap<Author, CreateAuthorDto>().ReverseMap();
+            CreateMap<Author, UpdateAuthorDto>().ReverseMap();
+            #endregion
+
+            #region Category
+            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+            #endregion
+
+            #region Publisher
+            CreateMap<Publisher, PublisherDto>().ReverseMap();
+            CreateMap<Publisher, CreatePublisherDto>().ReverseMap();
+            CreateMap<Publisher, UpdatePublisherDto>().ReverseMap();
+            #endregion
+
         }
     }
 }
