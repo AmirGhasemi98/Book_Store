@@ -5,6 +5,6 @@ namespace Book_Store.Application.Features.Publishers.Requests.Commands
 {
     public class UpdatePublisherCommand : IRequest<Unit>
     {
-        public PublisherDto PublisherDto { get; set; }
+        public UpdatePublisherDto UpdatePublisherDto { get; set; }
     }
 }

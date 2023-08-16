@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.Publisher
 {
-    public class CreatePublisherDto : IPublisherDto
+    public interface IPublisherDto
     {
         public string Title { get; set; }
     }

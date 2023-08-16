@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Book_Store.Application.DTOs.Publisher.Validators;
 using Book_Store.Application.Features.Publishers.Requests.Commands;
 using Book_Store.Application.Persistence.Contracts;
 using Book_Store.Domain.Entites;
@@ -19,7 +20,17 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
 
         public async Task<int> Handle(CreatePublisherCommand request, CancellationToken cancellationToken)
         {
-            var publisher = _mapper.Map<Publisher>(request.PublisherDto);
+            #region Validation
+
+            var validator = new CreatePublisherDtoValidator();
+            var validationResult = await validator.ValidateAsync(request.CreatePublisherDto);
+
+            if (!validationResult.IsValid)
+                throw new Exception();
+
+            #endregion
+
+            var publisher = _mapper.Map<Publisher>(request.CreatePublisherDto);
             publisher = await _publisherRepository.Add(publisher);
             return publisher.Id;
         }

@@ -2,7 +2,7 @@
 
 namespace Book_Store.Application.DTOs.Publisher
 {
-    public class PublisherDto : BaseDto
+    public class UpdatePublisherDto : BaseDto, IPublisherDto
     {
         public string Title { get; set; }
     }

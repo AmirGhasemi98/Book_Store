@@ -5,6 +5,6 @@ namespace Book_Store.Application.Features.Publishers.Requests.Commands
 {
     public class CreatePublisherCommand : IRequest<int>
     {
-        public PublisherDto PublisherDto { get; set; }
+        public CreatePublisherDto CreatePublisherDto { get; set; }
     }
 }
