@@ -9,5 +9,15 @@ namespace Book_Store.Domain.Entites
         public int? ParentId { get; set; }
 
         public Category Parent { get; set; }
+
+        #region Relations
+
+        public ICollection<Category> Children { get; set; }
+
+        public ICollection<Book> Books { get; set; }
+
+        #endregion
+
+
     }
 }

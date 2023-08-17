@@ -9,5 +9,11 @@ namespace Book_Store.Domain.Entites
         public string LastName { get; set; }
 
         public DateTime? BirthDate { get; set; }
+
+        #region Relations
+
+        public ICollection<Book> Books { get; set; }
+
+        #endregion
     }
 }

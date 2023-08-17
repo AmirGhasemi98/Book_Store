@@ -22,7 +22,7 @@ namespace Book_Store.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookStoreDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookStoreDbContext).Assembly);            
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
