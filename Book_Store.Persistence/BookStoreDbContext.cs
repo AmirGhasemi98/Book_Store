@@ -1,10 +1,6 @@
 ﻿using Book_Store.Domain.Common;
+using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Persistence
 {
@@ -15,6 +11,13 @@ namespace Book_Store.Persistence
 
         }
 
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<Publisher> Publishers { get; set; }
+
+        public DbSet<Book> Books { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
