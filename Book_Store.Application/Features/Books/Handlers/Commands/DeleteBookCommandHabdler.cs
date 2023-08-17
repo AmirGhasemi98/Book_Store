@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Book_Store.Application.Features.Books.Requests.Commands;
-using Book_Store.Application.Persistence.Contracts;
+using Book_Store.Application.Contracts.Persistence;
 using MediatR;
 using System;
 using System.Collections.Generic;

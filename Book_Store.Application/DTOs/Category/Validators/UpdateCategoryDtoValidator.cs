@@ -1,4 +1,4 @@
-﻿using Book_Store.Application.Persistence.Contracts;
+﻿using Book_Store.Application.Contracts.Persistence;
 using FluentValidation;
 
 namespace Book_Store.Application.DTOs.Category.Validators

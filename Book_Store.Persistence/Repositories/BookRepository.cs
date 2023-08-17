@@ -1,4 +1,4 @@
-﻿using Book_Store.Application.Persistence.Contracts;
+﻿using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 

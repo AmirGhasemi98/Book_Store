@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Book_Store.Application.DTOs.Publisher.Validators;
 using Book_Store.Application.Features.Publishers.Requests.Commands;
-using Book_Store.Application.Persistence.Contracts;
+using Book_Store.Application.Contracts.Persistence;
 using MediatR;
 
 namespace Book_Store.Application.Features.Publishers.Handlers.Commands

@@ -1,4 +1,4 @@
-﻿namespace Book_Store.Application.Persistence.Contracts
+﻿namespace Book_Store.Application.Contracts.Persistence
 {
     public interface IGenericRepository<T> where T : class
     {

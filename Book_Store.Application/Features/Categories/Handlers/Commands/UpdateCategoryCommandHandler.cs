@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.DTOs.Category.Validators;
 using Book_Store.Application.Features.Categories.Requests.Commands;
-using Book_Store.Application.Persistence.Contracts;
 using MediatR;
 
 namespace Book_Store.Application.Features.Categories.Handlers.Commands
