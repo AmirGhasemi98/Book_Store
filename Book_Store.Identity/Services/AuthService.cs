@@ -69,9 +69,31 @@ namespace Book_Store.Identity.Services
         }
         #endregion
 
-        public Task<AuthResponse> Login(AuthRequset requset)
+        public async Task<AuthResponse> Login(AuthRequset requset)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(requset.Email);
+            if (user is null)
+                throw new Exception("کاربر یافت نشد.");
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, requset.Password, false, false);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception("عملیات با شکست روبرو شد.");
+            }
+
+            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+
+            AuthResponse response = new AuthResponse()
+            {
+                Id = user.Id,
+                Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+                Email = user.Email,
+                UserName = user.UserName,
+            };
+
+            return response;
+
         }
 
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
@@ -105,7 +127,7 @@ namespace Book_Store.Identity.Services
                 audience: _jwtSettings.Audience,
                 claims = claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
-                signingCredentials : signInCredentials
+                signingCredentials: signInCredentials
 
 
                 );
