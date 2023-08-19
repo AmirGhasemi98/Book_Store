@@ -21,7 +21,7 @@ namespace Book_Store.Identity
 
             services.AddDbContext<BookStoreIdentityDbContext>(option =>
             {
-                option.UseSqlServer(configuration.GetConnectionString("BookStoreConnectionString"),
+                option.UseSqlServer(configuration.GetConnectionString("BookStoreIdentityConnectionString"),
                     b => b.MigrationsAssembly(typeof(BookStoreIdentityDbContext).Assembly.FullName));
             });
 
