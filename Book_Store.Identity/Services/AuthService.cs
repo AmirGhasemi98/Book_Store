@@ -43,8 +43,11 @@ namespace Book_Store.Identity.Services
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                LockoutEnabled = true
+                EmailConfirmed = true,
+                UserName= request.UserName,
             };
+
+            
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser == null)
