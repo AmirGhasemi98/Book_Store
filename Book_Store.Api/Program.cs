@@ -55,10 +55,10 @@ void AddSwagger(IServiceCollection services)
     {
         o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
         {
-            Description = @"JWT Authorization Header Using The Bearer Schema.
-                       Enter 'Bearer' [Space] And Then Your Token In The Text Input Below.
-                       Example: 'Bearer 1234ssdw'",
-            Name = "Athorization",
+            Description = @"JWT Authorization header using the Bearer scheme. 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      Example: 'Bearer 1234sddsw'",
+            Name = "Authorization",
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
@@ -67,26 +67,25 @@ void AddSwagger(IServiceCollection services)
         o.AddSecurityRequirement(new OpenApiSecurityRequirement()
         {
             {
-               new OpenApiSecurityScheme()
-               {
-                   Reference = new OpenApiReference()
-                   {
-                       Type = ReferenceType.SecurityScheme,
-                       Id = "Bearer"
-                   },
-                   Scheme = "oauth2",
-                   Name = "Bearer",
-                   In = ParameterLocation.Header
-               },
-               new List<string>()
+                new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+                    Scheme = "oauth2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header
+                },
+                new List<string>()
             }
-
         });
 
-        o.SwaggerDoc("V1", new OpenApiInfo()
+        o.SwaggerDoc("v1", new OpenApiInfo()
         {
             Version = "v1",
-            Title = "Book store Api"
+            Title = "Book Store Api"
         });
     });
 }

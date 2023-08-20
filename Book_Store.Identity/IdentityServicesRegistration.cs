@@ -31,7 +31,6 @@ namespace Book_Store.Identity
             services.AddTransient<IAuthService, AuthService>();
             //services.AddTransient<IUserService, UserService>();
 
-
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
