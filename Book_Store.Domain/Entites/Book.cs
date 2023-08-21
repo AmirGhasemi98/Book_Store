@@ -28,7 +28,7 @@ namespace Book_Store.Domain.Entites
 
         public Publisher Publisher { get; set; }
 
-
+        public ICollection<Comment> Comments { get; set; }
 
         #endregion
 
