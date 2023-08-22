@@ -23,6 +23,8 @@ namespace Book_Store.Persistence
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IBookRepository , BookRepository>();
             services.AddScoped<IBookRepository , BookRepository>();
+            services.AddScoped<ICommentRepository , CommentRepository>();
+            services.AddScoped<IUserRepository , UserRepository>();
 
             return services;
         }

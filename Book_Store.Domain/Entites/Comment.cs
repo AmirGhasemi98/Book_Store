@@ -10,6 +10,8 @@ namespace Book_Store.Domain.Entites
 
         public string UserId { get; set; }
 
+        public User User { get; set; }
+
         #region Relations
 
         public int BookId { get; set; }
