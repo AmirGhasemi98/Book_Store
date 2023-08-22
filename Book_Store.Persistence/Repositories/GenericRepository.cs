@@ -41,9 +41,20 @@ namespace Book_Store.Persistence.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<List<T>> GetList()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
         public async Task Update(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateRange(List<T> entities)
+        {
+            _context.UpdateRange(entities);
             await _context.SaveChangesAsync();
         }
     }

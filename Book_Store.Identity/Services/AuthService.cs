@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Book_Store.Application.Constance;
 using Book_Store.Application.Contracts.Identity;
+using Book_Store.Application.DTOs.User;
 using Book_Store.Application.Features.Users.Requests.Commands;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Identity.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -139,6 +141,19 @@ namespace Book_Store.Identity.Services
                 );
 
             return jwtSecurityToken;
+        }
+
+        public async Task<List<SyncUserDto>> GetUsersForSync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            var result = users.Select(x => new SyncUserDto
+            {
+                UserId = x.Id,
+                UserName = x.UserName
+            }).ToList();
+
+            return result;
         }
 
     }

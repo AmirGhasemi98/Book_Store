@@ -6,11 +6,15 @@
 
         Task<IReadOnlyList<T>> GetAll();
 
+        Task<List<T>> GetList();
+
         Task<bool> Exist(int id);
 
         Task<T> Add(T entity);
 
         Task Update(T entity);
+
+        Task UpdateRange(List<T> entities);
 
         Task Delete(T entity);
 
