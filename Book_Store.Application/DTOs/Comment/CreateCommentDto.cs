@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Book_Store.Application.DTOs.Comment
+﻿namespace Book_Store.Application.DTOs.Comment
 {
     public class CreateCommentDto : ICommentDto
     {
