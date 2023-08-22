@@ -1,17 +1,16 @@
-﻿using Book_Store.Application.Constance;
+﻿using AutoMapper;
+using Book_Store.Application.Constance;
 using Book_Store.Application.Contracts.Identity;
+using Book_Store.Application.Features.Users.Requests.Commands;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Identity.Models;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Identity.Services
 {
@@ -20,12 +19,14 @@ namespace Book_Store.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMediator _mediator;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager)
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager, IMediator mediator)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
+            _mediator = mediator;
         }
 
         #region Register
@@ -44,10 +45,8 @@ namespace Book_Store.Identity.Services
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 EmailConfirmed = true,
-                UserName= request.UserName,
+                UserName = request.UserName,
             };
-
-            
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser == null)
@@ -57,6 +56,10 @@ namespace Book_Store.Identity.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Employee");
+
+                    var command = new CreateUserCommand { CreateUserDto = new Application.DTOs.User.CreateUserDto { Id = user.Id, UserName = user.UserName } };
+                    await _mediator.Send(command);
+
                     return new RegistrationResponse() { UserId = user.Id };
                 }
                 else
