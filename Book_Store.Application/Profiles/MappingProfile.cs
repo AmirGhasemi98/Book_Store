@@ -2,7 +2,9 @@
 using Book_Store.Application.DTOs.Author;
 using Book_Store.Application.DTOs.Book;
 using Book_Store.Application.DTOs.Category;
+using Book_Store.Application.DTOs.Comment;
 using Book_Store.Application.DTOs.Publisher;
+using Book_Store.Application.DTOs.User;
 using Book_Store.Domain.Entites;
 
 namespace Book_Store.Application.Profiles
@@ -34,6 +36,16 @@ namespace Book_Store.Application.Profiles
             CreateMap<Publisher, PublisherDto>().ReverseMap();
             CreateMap<Publisher, CreatePublisherDto>().ReverseMap();
             CreateMap<Publisher, UpdatePublisherDto>().ReverseMap();
+            #endregion
+
+            #region Comment
+            CreateMap<Comment, CommentDto>().ReverseMap();
+            CreateMap<Comment, CreateCommentDto>().ReverseMap();
+            #endregion
+
+            #region User
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, CreateUserDto>().ReverseMap();
             #endregion
 
         }
