@@ -18,7 +18,7 @@ namespace Book_Store.Persistence.Repositories
 
         public async Task<List<Comment>> GetCommentsOfBook(int bookId)
         {
-            return await _context.Comments.Include(c => c.UserId).Where(c => c.BookId == bookId).ToListAsync();
+            return await _context.Comments.Include(c => c.User).Where(c => c.BookId == bookId).ToListAsync();
         }
     }
 }
