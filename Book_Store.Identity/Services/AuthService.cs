@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using Book_Store.Application.Constance;
+﻿using Book_Store.Application.Constance;
 using Book_Store.Application.Contracts.Identity;
-using Book_Store.Application.DTOs.User;
-using Book_Store.Application.Features.Users.Requests.Commands;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Identity.Models;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,14 +16,12 @@ namespace Book_Store.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IMediator _mediator;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager, IMediator mediator)
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
-            _mediator = mediator;
         }
 
         #region Register
@@ -59,8 +52,6 @@ namespace Book_Store.Identity.Services
                 {
                     await _userManager.AddToRoleAsync(user, "Employee");
 
-                    var command = new CreateUserCommand { CreateUserDto = new Application.DTOs.User.CreateUserDto { Id = user.Id, UserName = user.UserName } };
-                    await _mediator.Send(command);
 
                     return new RegistrationResponse() { UserId = user.Id };
                 }
@@ -136,25 +127,9 @@ namespace Book_Store.Identity.Services
                 claims = claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
                 signingCredentials: signInCredentials
-
-
                 );
 
             return jwtSecurityToken;
         }
-
-        public async Task<List<SyncUserDto>> GetUsersForSync()
-        {
-            var users = await _userManager.Users.ToListAsync();
-
-            var result = users.Select(x => new SyncUserDto
-            {
-                UserId = x.Id,
-                UserName = x.UserName
-            }).ToList();
-
-            return result;
-        }
-
     }
 }

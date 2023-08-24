@@ -21,9 +21,6 @@ namespace Book_Store.Persistence
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<User> Users { get; set; }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookStoreDbContext).Assembly);

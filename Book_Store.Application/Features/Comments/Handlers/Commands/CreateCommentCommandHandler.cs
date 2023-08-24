@@ -33,7 +33,7 @@ namespace Book_Store.Application.Features.Comments.Handlers.Commands
             #endregion
 
             var comment = _mapper.Map<Comment>(request.CreateCommentDto);
-            comment.UserId = request.UserId;
+            //comment.UserId = request.UserId;
             comment = await _commentRepository.Add(comment);
             return comment.Id;
         }

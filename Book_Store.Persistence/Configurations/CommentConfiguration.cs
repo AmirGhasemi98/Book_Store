@@ -15,7 +15,7 @@ namespace Book_Store.Persistence.Configurations
             builder.Property(x => x.Text).IsRequired();
 
             builder.HasOne(c => c.Book).WithMany(b => b.Comments).HasForeignKey(c => c.Id).IsRequired();
-            builder.HasOne(c => c.User).WithMany(u => u.Comments).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
+            //builder.HasOne(c => c.User).WithMany(u => u.Comments).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Cascade).IsRequired();
         }
     }
 }
