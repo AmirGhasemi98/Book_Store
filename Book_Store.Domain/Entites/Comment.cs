@@ -1,4 +1,5 @@
 ﻿using Book_Store.Domain.Common;
+using Book_Store.Domain.Identity;
 
 namespace Book_Store.Domain.Entites
 {
@@ -8,11 +9,13 @@ namespace Book_Store.Domain.Entites
 
         public int Rating { get; set; }
 
-       // public string UserId { get; set; }
 
-        
 
         #region Relations
+
+        public int UserId { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
 
         public int BookId { get; set; }
 

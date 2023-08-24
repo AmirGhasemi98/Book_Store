@@ -1,10 +1,13 @@
 ﻿using Book_Store.Domain.Common;
 using Book_Store.Domain.Entites;
+using Book_Store.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Book_Store.Persistence
 {
-    public class BookStoreDbContext : DbContext
+    public class BookStoreDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options) : base(options)
         {
@@ -21,9 +24,18 @@ namespace Book_Store.Persistence
 
         public DbSet<Comment> Comments { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookStoreDbContext).Assembly);
+
+            //modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+
+
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)

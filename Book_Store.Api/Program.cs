@@ -1,5 +1,4 @@
 using Book_Store.Application;
-using Book_Store.Identity;
 using Book_Store.Persistence;
 using Microsoft.OpenApi.Models;
 
@@ -12,7 +11,6 @@ builder.Services.AddControllers();
 
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
-builder.Services.ConfigureIdentityServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
