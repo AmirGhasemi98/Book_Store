@@ -18,13 +18,13 @@ namespace Book_Store.Persistence
         public static IServiceCollection ConfigurePersistenceServices(this IServiceCollection services,
            IConfiguration configuration)
         {
-            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-
             services.AddDbContext<BookStoreDbContext>(option =>
             {
                 option.UseSqlServer(configuration.GetConnectionString("BookStoreConnectionString"))
                     .EnableSensitiveDataLogging();
             });
+
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
             services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                .AddEntityFrameworkStores<BookStoreDbContext>().AddDefaultTokenProviders();
@@ -46,9 +46,9 @@ namespace Book_Store.Persistence
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
-                        ValidIssuer = configuration["Jwtsettings:Issuer"],
-                        ValidAudience = configuration["Jwtsettings:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwtsettings:Audience"]))
+                        ValidIssuer = configuration["JwtSettings:Issuer"],
+                        ValidAudience = configuration["JwtSettings:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                     };
                 });
 

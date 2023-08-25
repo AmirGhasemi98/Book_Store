@@ -55,7 +55,7 @@ namespace Book_Store.Persistence.Repositories
                 {
                     await _userManager.AddToRoleAsync(user, "Employee");
 
-                    
+
 
                     return new RegistrationResponse() { UserId = user.Id };
                 }
@@ -78,7 +78,7 @@ namespace Book_Store.Persistence.Repositories
             if (user is null)
                 throw new Exception("کاربر یافت نشد.");
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, requset.Password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, requset.Password, false, lockoutOnFailure: false);
 
             if (!result.Succeeded)
             {
@@ -131,14 +131,12 @@ namespace Book_Store.Persistence.Repositories
                 claims = claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
                 signingCredentials: signInCredentials
-
-
                 );
 
             return jwtSecurityToken;
         }
 
-       
+
 
     }
 }

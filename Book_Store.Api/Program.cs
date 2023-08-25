@@ -44,6 +44,13 @@ app.UseCors("CorsPolicy");
 
 app.MapControllers();
 
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin", // The name of your area folder
+    pattern: "{area:Admin}/{controller=Publisher}/{action=Get}/{id?}"
+);
+
+
 app.Run();
 
 
