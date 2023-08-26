@@ -4,10 +4,11 @@ using Book_Store.Application.Features.Categories.Requests.Commands;
 using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Domain.Entites;
 using MediatR;
+using Book_Store.Application.Responses;
 
 namespace Book_Store.Application.Features.Categories.Handlers.Commands
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, int>
+    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, BaseCommandResponse>
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
@@ -18,15 +19,23 @@ namespace Book_Store.Application.Features.Categories.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
+
             #region Validation
 
             var validator = new CreateCategoryDtoValidator(_categoryRepository);
             var validationResult = await validator.ValidateAsync(request.CreateCategoryDto);
 
             if (!validationResult.IsValid)
-                throw new Exception();
+            {
+                response.Success = false;
+                response.Message = "مشکلی پیش آمده است.";
+                response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+
+                return response;
+            }
 
             #endregion
 

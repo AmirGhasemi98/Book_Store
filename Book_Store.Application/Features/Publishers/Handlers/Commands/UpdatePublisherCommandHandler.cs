@@ -51,7 +51,7 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
 
 
             _mapper.Map(request.UpdatePublisherDto, publisher);
-            await _publisherRepository.Update(publisher);
+            await _publisherRepository.Update(publisher);   
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
