@@ -2,10 +2,7 @@
 using Book_Store.Application.Features.Publishers.Requests.Commands;
 using Book_Store.Application.Features.Publishers.Requests.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Security.Cryptography.Xml;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,12 +21,10 @@ namespace Book_Store.Api.Areas.Admin.Controllers
             _mediator = mediator;
         }
 
-
-
         // GET: api/<PublisherController>
         [HttpGet]
         public async Task<ActionResult<PublisherDto>> Get()
-        {
+        {            
             var publishers = await _mediator.Send(new GetPublisherListRequest());
             return Ok(publishers);
         }

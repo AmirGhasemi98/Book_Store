@@ -32,6 +32,8 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
                 response.Success = false;
                 response.Message = "مشکلی پیش آمده است.";
                 response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+
+                return response;
             }
 
             #endregion
@@ -43,6 +45,8 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
                 response.Success = false;
                 response.Message = "انتشارات یافت نشد.";
                 response.Errors.Add("انتشارات یافت نشد.");
+
+                return response;
             }
 
 

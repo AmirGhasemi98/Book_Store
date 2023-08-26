@@ -33,8 +33,9 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
                 response.Success = false;
                 response.Message = "مشکلی پیش آمده است.";
                 response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
-            }
 
+                return response;
+            }
 
             #endregion
 

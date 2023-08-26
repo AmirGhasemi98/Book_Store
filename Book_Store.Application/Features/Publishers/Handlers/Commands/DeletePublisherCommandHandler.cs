@@ -28,6 +28,8 @@ namespace Book_Store.Application.Features.Publishers.Handlers.Commands
                 response.Success = false;
                 response.Message = "انتشارات یافت نشد.";
                 response.Errors.Add("انتشارات یافت نشد.");
+
+                return response;
             }
 
             await _publisherRepository.Delete(publisher);

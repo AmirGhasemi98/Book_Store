@@ -42,6 +42,8 @@ namespace Book_Store.Persistence
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
+           
+
             foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
             {
                 if (entry.State == EntityState.Modified)

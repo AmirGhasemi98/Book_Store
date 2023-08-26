@@ -2,10 +2,11 @@
 using Book_Store.Application.Features.Authors.Requests.Commands;
 using Book_Store.Application.Contracts.Persistence;
 using MediatR;
+using Book_Store.Application.Responses;
 
 namespace Book_Store.Application.Features.Authors.Handlers.Commands
 {
-    public class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCommand>
+    public class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCommand, BaseCommandResponse>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
@@ -16,11 +17,29 @@ namespace Book_Store.Application.Features.Authors.Handlers.Commands
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<BaseCommandResponse> Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
         {
+            var response = new BaseCommandResponse();
+
             var author = await _authorRepository.Get(request.Id);
+
+            if (author is null)
+            {
+                response.Success = false;
+                response.Message = "نویسنده یافت نشد.";
+                response.Errors.Add("نویسنده یافت نشد.");
+
+                return response;
+            }
+
+
             await _authorRepository.Delete(author);
-            return Unit.Value;
+
+            response.Success = true;
+            response.Message = "عملیات با موفقیت انجام شد.";
+            response.Id = author.Id;
+
+            return response;
         }
     }
 }
