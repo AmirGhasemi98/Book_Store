@@ -1,9 +1,11 @@
 ﻿using Book_Store.Domain.Common;
 using Book_Store.Domain.Entites;
 using Book_Store.Domain.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Book_Store.Persistence
 {
@@ -43,10 +45,13 @@ namespace Book_Store.Persistence
             foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
             {
                 if (entry.State == EntityState.Modified)
-                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                    entry.Entity.ModifiedDate = DateTime.UtcNow;
 
                 if (entry.State == EntityState.Added)
+                {
                     entry.Entity.DateCreated = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = "Amir";
+                }
             }
 
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
@@ -57,7 +62,7 @@ namespace Book_Store.Persistence
             foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
             {
                 if (entry.State == EntityState.Modified)
-                    entry.Entity.LastModifiedDate = DateTime.UtcNow;
+                    entry.Entity.ModifiedDate = DateTime.UtcNow;
 
                 if (entry.State == EntityState.Added)
                     entry.Entity.DateCreated = DateTime.UtcNow;
