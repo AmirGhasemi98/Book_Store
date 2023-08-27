@@ -48,6 +48,14 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
             var book = _mapper.Map<Book>(request.CreateBookDto);
             book = await _bookRepository.Add(book);
 
+            using (MemoryStream stream = new MemoryStream())
+            {
+                request.CreateBookDto.BookImage.CopyTo(stream);
+                byte[] bytes = stream.GetBuffer();
+
+                book.Image = bytes;
+            }
+
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
             response.Id = book.Id;
