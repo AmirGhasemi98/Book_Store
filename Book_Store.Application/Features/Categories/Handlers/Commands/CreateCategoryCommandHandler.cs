@@ -41,7 +41,12 @@ namespace Book_Store.Application.Features.Categories.Handlers.Commands
 
             var category = _mapper.Map<Category>(request.CreateCategoryDto);
             category = await _categoryRepository.Add(category);
-            return category.Id;
+
+            response.Success = true;
+            response.Message = "عملیات با موفقیت انجام شد.";
+            response.Id = category.Id;
+
+            return response;
         }
     }
 }
