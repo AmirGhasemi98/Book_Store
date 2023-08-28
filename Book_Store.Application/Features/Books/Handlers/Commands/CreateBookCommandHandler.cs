@@ -5,6 +5,7 @@ using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.Responses;
 using Book_Store.Domain.Entites;
 using MediatR;
+using Book_Store.Application.Features.BookImages.Requests.Commands;
 
 namespace Book_Store.Application.Features.Books.Handlers.Commands
 {
@@ -15,15 +16,18 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
         private readonly ICategoryRepository _categoryRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly IPublisherRepository _publisherRepository;
+        private readonly IMediator _mediator;
 
         public CreateBookCommandHandler(IBookRepository bookRepository, IMapper mapper,
-            ICategoryRepository categoryRepository, IAuthorRepository authorRepository, IPublisherRepository publisherRepository)
+            ICategoryRepository categoryRepository, IAuthorRepository authorRepository,
+            IPublisherRepository publisherRepository, IMediator mediator)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
             _authorRepository = authorRepository;
             _publisherRepository = publisherRepository;
+            _mediator = mediator;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateBookCommand request, CancellationToken cancellationToken)
@@ -42,19 +46,19 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
             }
 
-
             #endregion
 
             var book = _mapper.Map<Book>(request.CreateBookDto);
             book = await _bookRepository.Add(book);
 
-            using (MemoryStream stream = new MemoryStream())
+            var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
             {
-                request.CreateBookDto.BookImage.CopyTo(stream);
-                byte[] bytes = stream.GetBuffer();
+                CreateBookImageDto = new DTOs.BookImage.CreateBookImageDto
+                { BookId = book.Id, Image = request.CreateBookDto.BookImage }
+            });
 
-                book.Image = bytes;
-            }
+            if (!bookImageResponse.Success)
+                response.Errors.AddRange(response.Errors);
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
