@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Book_Store.Application.DTOs.Author;
 using Book_Store.Application.DTOs.Book;
+using Book_Store.Application.DTOs.BookImage;
 using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Comment;
 using Book_Store.Application.DTOs.Publisher;
@@ -17,6 +18,10 @@ namespace Book_Store.Application.Profiles
             CreateMap<Book, CreateBookDto>().ReverseMap();
             CreateMap<Book, UpdateBookDto>().ReverseMap();
 
+            #endregion
+
+            #region Book Image
+            CreateMap<BookImage, GetBookImageDto>().ReverseMap();
             #endregion
 
             #region Author
@@ -42,7 +47,7 @@ namespace Book_Store.Application.Profiles
             CreateMap<Comment, CreateCommentDto>().ReverseMap();
             #endregion
 
-           
+
 
         }
     }

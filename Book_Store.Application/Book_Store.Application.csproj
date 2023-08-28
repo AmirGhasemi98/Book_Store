@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\BookImages\Handlers\Commands\" />
+    <Folder Include="Features\BookImages\Requests\Commands\" />
     <Folder Include="Features\Languages\Handlers\Commands\" />
     <Folder Include="Features\Languages\Handlers\Queries\" />
     <Folder Include="Features\Languages\Requests\Commands\" />
