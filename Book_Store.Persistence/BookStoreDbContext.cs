@@ -1,11 +1,9 @@
 ﻿using Book_Store.Domain.Common;
 using Book_Store.Domain.Entites;
 using Book_Store.Domain.Identity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace Book_Store.Persistence
 {
@@ -26,6 +24,8 @@ namespace Book_Store.Persistence
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<BookImage> BookImages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +42,7 @@ namespace Book_Store.Persistence
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
-           
+
 
             foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
             {
