@@ -99,6 +99,11 @@ namespace Book_Store.Persistence.Repositories
 
         }
 
+        //public Task<AuthRequset> RefreshToken(string Token)
+        //{
+
+        //}
+
         private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);

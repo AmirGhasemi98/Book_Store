@@ -1,4 +1,5 @@
 ﻿using Book_Store.Application.DTOs.Common;
+using Microsoft.AspNetCore.Http;
 
 namespace Book_Store.Application.DTOs.Book
 {
@@ -12,7 +13,7 @@ namespace Book_Store.Application.DTOs.Book
 
         public int Inventory { get; set; }
 
-        public byte[] Image { get; set; }
+        public IFormFile BookImage { get; set; }
 
         public int CategoryId { get; set; }
 

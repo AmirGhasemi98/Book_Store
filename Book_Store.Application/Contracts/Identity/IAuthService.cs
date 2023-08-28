@@ -6,6 +6,8 @@ namespace Book_Store.Application.Contracts.Identity
     {
         Task<AuthResponse> Login(AuthRequset requset);
 
-        Task<RegistrationResponse> Register(RegistrationRequest request);        
+        Task<RegistrationResponse> Register(RegistrationRequest request);
+
+        //Task<AuthRequset> RefreshToken(string Token);
     }
 }
