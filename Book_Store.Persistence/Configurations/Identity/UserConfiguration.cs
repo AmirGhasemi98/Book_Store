@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Security;
 
 namespace Book_Store.Persistence.Configurations.Identity
 {
@@ -24,7 +23,8 @@ namespace Book_Store.Persistence.Configurations.Identity
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
                     PasswordHash = hasher.HashPassword(null, "P@ssword1"),
                     EmailConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D")
+                    ConcurrencyStamp = "740c15c3-3fe0-4c79-8c7c-13562b21617f",
+                    SecurityStamp = "e943ea3c-33e2-49c0-be3e-2c587f87739a"
                 },
                 new ApplicationUser
                 {
@@ -37,7 +37,8 @@ namespace Book_Store.Persistence.Configurations.Identity
                     NormalizedUserName = "USER@LOCALHOST.COM",
                     PasswordHash = hasher.HashPassword(null, "P@ssword1"),
                     EmailConfirmed = true,
-                    SecurityStamp = Guid.NewGuid().ToString("D")
+                    ConcurrencyStamp = "7b023c48-c3a5-4a2a-9ebb-cc9d3aa62682",
+                    SecurityStamp = "a0e7bb30-2bd4-455e-a645-30c8fb64bbcf"
                 }
                 );
         }

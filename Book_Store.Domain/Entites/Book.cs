@@ -12,8 +12,6 @@ namespace Book_Store.Domain.Entites
 
         public int Inventory { get; set; }
 
-        public byte[] Image { get; set; }
-
         #region Relations
 
         public int CategoryId { get; set; }
