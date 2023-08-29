@@ -14,6 +14,7 @@ namespace Book_Store.Persistence.Configurations
 
             builder.Property(a => a.FirstName).HasMaxLength(50).IsRequired();
             builder.Property(a => a.LastName).HasMaxLength(100).IsRequired();
+
         }
     }
 }

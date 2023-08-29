@@ -26,6 +26,8 @@ namespace Book_Store.Persistence
 
         public DbSet<BookImage> BookImages { get; set; }
 
+        public DbSet<BookMapAuthor> BookMapAuthors { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

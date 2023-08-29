@@ -12,7 +12,7 @@ namespace Book_Store.Domain.Entites
 
         #region Relations
 
-        public ICollection<Book> Books { get; set; }
+        public ICollection<BookMapAuthor> BookMapAuthors { get; set; }
 
         #endregion
     }

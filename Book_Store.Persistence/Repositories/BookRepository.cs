@@ -15,13 +15,13 @@ namespace Book_Store.Persistence.Repositories
 
         public async Task<List<Book>> GetBooksWithDetailes()
         {
-            return await _context.Books.Include(b => b.Author).Include(b => b.Publisher)
+            return await _context.Books.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).Include(b => b.Publisher)
                 .Include(b => b.Category).ToListAsync();
         }
 
         public async Task<Book> GetBookWithDetaile(int id)
         {
-            return await _context.Books.Include(b => b.Author).Include(b => b.Publisher)
+            return await _context.Books.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).Include(b => b.Publisher)
                 .Include(b => b.Category).FirstOrDefaultAsync(b => b.Id == id);
         }
     }

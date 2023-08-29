@@ -18,10 +18,6 @@ namespace Book_Store.Domain.Entites
 
         public Category Category { get; set; }
 
-        public int AuthorId { get; set; }
-
-        public Author Author { get; set; }
-
         public int PublisherId { get; set; }
 
         public Publisher Publisher { get; set; }
@@ -29,6 +25,8 @@ namespace Book_Store.Domain.Entites
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<BookImage> BookImages { get; set; }
+
+        public ICollection<BookMapAuthor> bookMapAuthors { get; set; }
 
         #endregion
 
