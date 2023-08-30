@@ -1,6 +1,7 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Book_Store.Persistence.Repositories
 {
@@ -63,6 +64,23 @@ namespace Book_Store.Persistence.Repositories
         {
             _context.UpdateRange(entities);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            await _context.Database.CommitTransactionAsync();
+            await _context.DisposeAsync();
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            await _context.Database.RollbackTransactionAsync();
+            await _context.DisposeAsync();
         }
     }
 }

@@ -20,6 +20,12 @@
 
         Task Delete(T entity);
 
+        Task BeginTransactionAsync();
+
+        Task CommitTransactionAsync();
+
+        Task RollbackTransactionAsync();
+
 
     }
 }

@@ -8,6 +8,7 @@ using MediatR;
 using Book_Store.Application.Features.BookImages.Requests.Commands;
 using Book_Store.Application.Features.BookMapAuthors.Requests.Commands;
 using Book_Store.Application.DTOs.BookMapAuthor;
+using System.Transactions;
 
 namespace Book_Store.Application.Features.Books.Handlers.Commands
 {
@@ -34,6 +35,7 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
 
         public async Task<BaseCommandResponse> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
+
             var response = new BaseCommandResponse();
 
             #region Validation
@@ -46,11 +48,16 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 response.Success = false;
                 response.Message = "مشکلی پیش آمده است.";
                 response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+
+                return response;
             }
 
             #endregion
 
             var book = _mapper.Map<Book>(request.CreateBookDto);
+
+            await _bookRepository.BeginTransactionAsync();
+
             book = await _bookRepository.Add(book);
 
             var bookAuthorsResponse = await _mediator.Send(new CreateBookAuthorCommand
@@ -59,8 +66,16 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 { BookId = book.Id, AuthorIds = request.CreateBookDto.AuthorIds }
             });
 
+            if (!bookAuthorsResponse.Success)
+            {
+                response.Errors.AddRange(bookAuthorsResponse.Errors);
 
-            response.Errors.AddRange(bookAuthorsResponse.Errors);
+                await _bookRepository.RollbackTransactionAsync();
+
+                return response;
+            }
+
+
 
             var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
             {
@@ -69,11 +84,14 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
             });
 
 
+
             response.Errors.AddRange(bookImageResponse.Errors);
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
             response.Id = book.Id;
+
+            _bookRepository.CommitTransactionAsync();
 
             return response;
         }
