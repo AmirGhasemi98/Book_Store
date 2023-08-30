@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Features\BookMapAuthors\Handlers\Queries\" />
+    <Folder Include="Features\BookMapAuthors\Requests\Queries\" />
     <Folder Include="Features\Languages\Handlers\Commands\" />
     <Folder Include="Features\Languages\Handlers\Queries\" />
     <Folder Include="Features\Languages\Requests\Commands\" />

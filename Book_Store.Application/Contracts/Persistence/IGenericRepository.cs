@@ -12,6 +12,8 @@
 
         Task<T> Add(T entity);
 
+        Task AddRange(List<T> entities);
+
         Task Update(T entity);
 
         Task UpdateRange(List<T> entities);

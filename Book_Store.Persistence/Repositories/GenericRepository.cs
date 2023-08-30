@@ -19,6 +19,12 @@ namespace Book_Store.Persistence.Repositories
             return entity;
         }
 
+        public async Task AddRange(List<T> entities)
+        {
+            await _context.AddRangeAsync(entities);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
