@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Application.DTOs.BookImage;
 using Book_Store.Application.Features.BookImages.Requests.Queries;
 using MediatR;
 
