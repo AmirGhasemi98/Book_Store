@@ -11,5 +11,10 @@ namespace Book_Store.Persistence.Repositories
         {
             _context = context;
         }
+
+        public async Task DeleteBookAuthors(int bookId)
+        {
+            _context.BookMapAuthors.Where(ba => ba.BookId == bookId).ToList().ForEach(x => _context.BookMapAuthors.Remove(x));
+        }
     }
 }

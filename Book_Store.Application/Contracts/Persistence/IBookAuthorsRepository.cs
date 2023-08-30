@@ -4,5 +4,6 @@ namespace Book_Store.Application.Contracts.Persistence
 {
     public interface IBookAuthorsRepository : IGenericRepository<BookMapAuthor>
     {
+        Task DeleteBookAuthors(int bookId);
     }
 }
