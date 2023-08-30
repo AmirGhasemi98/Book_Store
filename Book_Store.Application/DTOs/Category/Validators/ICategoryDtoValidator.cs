@@ -14,13 +14,13 @@ namespace Book_Store.Application.DTOs.Category.Validators
             RuleFor(c => c.Title).NotEmpty().WithMessage("نام نمی تواند خالی باشد.")
                .NotNull().MaximumLength(50).WithMessage("نام نمی تواند بیشتر از 50 کاراکتر باشد.");
 
-            When(c => c != null, () =>
+            When(c => c.ParentId != null, () =>
             {
                 RuleFor(c => c.ParentId).GreaterThan(0)/*.WithMessage("شناسه دسته بندی نمی تواند صفر باشد.")*/
                .MustAsync(async (id, token) =>
                {
                    var categoryExist = await _categoryRepository.Exist(id.Value);
-                   return !categoryExist;
+                   return categoryExist;
                }).WithMessage("دسته بندی والد یافت نشد.");
             });
 

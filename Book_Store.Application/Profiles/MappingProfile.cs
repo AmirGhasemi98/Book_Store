@@ -21,7 +21,7 @@ namespace Book_Store.Application.Profiles
             #endregion
 
             #region Book Image
-            CreateMap<BookImage, GetBookImageDto>().ReverseMap();
+            //CreateMap<BookImage, GetBookImageDto>().ReverseMap().ForMember(dest => dest.File, opt => opt.MapFrom(src => src.Image));
             #endregion
 
             #region Author

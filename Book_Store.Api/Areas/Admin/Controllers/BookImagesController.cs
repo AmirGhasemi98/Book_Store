@@ -22,11 +22,11 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var book = await _mediator.Send(new GetBookImageRequest { BookId = id });
+            var image = await _mediator.Send(new GetBookImageRequest { BookId = id });
 
-            var contentType = book.Image.ContentType();
+            var contentType = image.ContentType();
 
-            return File(book.Image, contentType, book.Image.FileName());
+            return File(image, contentType, image.FileName());
         }
 
     }

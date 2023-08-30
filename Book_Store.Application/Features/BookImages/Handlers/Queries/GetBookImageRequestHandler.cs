@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Book_Store.Application.Features.BookImages.Handlers.Queries
 {
-    public class GetBookImageRequestHandler : IRequestHandler<GetBookImageRequest, GetBookImageDto>
+    public class GetBookImageRequestHandler : IRequestHandler<GetBookImageRequest, byte[]>
     {
         private readonly IBookImageRepository _bookImageRepository;
         private readonly IMapper _mapper;
@@ -18,10 +18,10 @@ namespace Book_Store.Application.Features.BookImages.Handlers.Queries
             _mapper = mapper;
         }
 
-        public async Task<GetBookImageDto> Handle(GetBookImageRequest request, CancellationToken cancellationToken)
+        public async Task<byte[]> Handle(GetBookImageRequest request, CancellationToken cancellationToken)
         {
             var bookImage = await _bookImageRepository.Get(request.BookId);
-            return _mapper.Map<GetBookImageDto>(bookImage);
+            return bookImage.File;
         }
     }
 }

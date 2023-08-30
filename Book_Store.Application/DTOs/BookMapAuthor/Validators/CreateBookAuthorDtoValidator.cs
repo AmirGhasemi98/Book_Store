@@ -15,7 +15,7 @@ namespace Book_Store.Application.DTOs.BookMapAuthor.Validators
                 .MustAsync(async (id, token) =>
                 {
                     var authorExist = await _authorRepository.Exist(id);
-                    return !authorExist;
+                    return authorExist;
                 }).WithMessage("نویسنده با شناسه {CollectionIndex} یافت نشد.");
         }
     }

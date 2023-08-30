@@ -37,7 +37,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // POST api/<BooksController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateBookDto book)
+        public async Task<IActionResult> Post([FromForm] CreateBookDto book)
         {
             var command = new CreateBookCommand { CreateBookDto = book };
             var response = await _mediator.Send(command);

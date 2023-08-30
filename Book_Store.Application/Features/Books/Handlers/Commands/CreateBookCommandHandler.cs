@@ -59,8 +59,8 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 { BookId = book.Id, AuthorIds = request.CreateBookDto.AuthorIds }
             });
 
-            if (!bookAuthorsResponse.Success)
-                response.Errors.AddRange(bookAuthorsResponse.Errors);
+
+            response.Errors.AddRange(bookAuthorsResponse.Errors);
 
             var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
             {
@@ -68,8 +68,8 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 { BookId = book.Id, Image = request.CreateBookDto.BookImage }
             });
 
-            if (!bookImageResponse.Success)
-                response.Errors.AddRange(bookImageResponse.Errors);
+
+            response.Errors.AddRange(bookImageResponse.Errors);
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";

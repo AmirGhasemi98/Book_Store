@@ -50,7 +50,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         }
 
         // PUT api/<CategoriesController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateCategoryDto category)
         {
             var command = new UpdateCategoryCommand { UpdateCategoryDto = category };

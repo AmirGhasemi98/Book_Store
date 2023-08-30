@@ -28,14 +28,14 @@ namespace Book_Store.Application.DTOs.Book.Validators
             .MustAsync(async (id, Token) =>
             {
                 var categoryExist = await _categoryRepository.Exist(id);
-                return !categoryExist;
+                return categoryExist;
             }).WithMessage("دسته بندی یافت نشد.");
 
             RuleFor(c => c.PublisherId).GreaterThan(0)
           .MustAsync(async (id, Token) =>
           {
               var publisherExist = await _publisherRepository.Exist(id);
-              return !publisherExist;
+              return publisherExist;
           }).WithMessage("ناشر یافت نشد.");
 
         }

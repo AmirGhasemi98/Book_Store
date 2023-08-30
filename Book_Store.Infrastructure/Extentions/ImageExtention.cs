@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using MimeTypes.Core;
 
 namespace Book_Store.Infrastructure.Extentions
 {

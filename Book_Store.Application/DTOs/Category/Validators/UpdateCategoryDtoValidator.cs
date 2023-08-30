@@ -11,9 +11,16 @@ namespace Book_Store.Application.DTOs.Category.Validators
         {
             _categoryRepository = categoryRepository;
 
+            When(c => c.ParentId != null, () =>
+            {
+                RuleFor(c => c.ParentId).NotEqual(c => c.Id).WithMessage("نمی توانید خود دسته بندی را به عنوان والد انتخاب کنید.");
+            });
+
             Include(new ICategoryDtoValidator(_categoryRepository));
 
             RuleFor(c => c.Id).NotEmpty().NotNull().GreaterThan(0);
+
+
 
         }
     }
