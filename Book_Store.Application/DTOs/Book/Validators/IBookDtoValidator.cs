@@ -31,13 +31,6 @@ namespace Book_Store.Application.DTOs.Book.Validators
                 return !categoryExist;
             }).WithMessage("دسته بندی یافت نشد.");
 
-            RuleFor(c => c.AuthorId).GreaterThan(0)
-           .MustAsync(async (id, Token) =>
-           {
-               var authorExist = await _authorRepository.Exist(id);
-               return !authorExist;
-           }).WithMessage("نویسنده یافت نشد.");
-
             RuleFor(c => c.PublisherId).GreaterThan(0)
           .MustAsync(async (id, Token) =>
           {

@@ -6,6 +6,8 @@ using Book_Store.Application.Responses;
 using Book_Store.Domain.Entites;
 using MediatR;
 using Book_Store.Application.Features.BookImages.Requests.Commands;
+using Book_Store.Application.Features.BookMapAuthors.Requests.Commands;
+using Book_Store.Application.DTOs.BookMapAuthor;
 
 namespace Book_Store.Application.Features.Books.Handlers.Commands
 {
@@ -51,6 +53,15 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
             var book = _mapper.Map<Book>(request.CreateBookDto);
             book = await _bookRepository.Add(book);
 
+            var bookAuthorsResponse = await _mediator.Send(new CreateBookAuthorCommand
+            {
+                CreateBookAuthorDto = new CreateBookAuthorDto
+                { BookId = book.Id, AuthorIds = request.CreateBookDto.AuthorIds }
+            });
+
+            if (!bookAuthorsResponse.Success)
+                response.Errors.AddRange(bookAuthorsResponse.Errors);
+
             var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
             {
                 CreateBookImageDto = new DTOs.BookImage.CreateBookImageDto
@@ -58,7 +69,7 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
             });
 
             if (!bookImageResponse.Success)
-                response.Errors.AddRange(response.Errors);
+                response.Errors.AddRange(bookImageResponse.Errors);
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
