@@ -1,6 +1,4 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Application.DTOs.Book.Validators;
-using Book_Store.Application.DTOs.BookMapAuthor;
 using Book_Store.Application.DTOs.BookMapAuthor.Validators;
 using Book_Store.Application.Features.BookMapAuthors.Requests.Commands;
 using Book_Store.Application.Responses;
