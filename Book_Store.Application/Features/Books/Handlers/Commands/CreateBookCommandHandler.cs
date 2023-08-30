@@ -75,23 +75,19 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 return response;
             }
 
-
-
             var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
             {
                 CreateBookImageDto = new DTOs.BookImage.CreateBookImageDto
                 { BookId = book.Id, Image = request.CreateBookDto.BookImage }
             });
 
-
-
             response.Errors.AddRange(bookImageResponse.Errors);
+
+            await _bookRepository.CommitTransactionAsync();
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";
             response.Id = book.Id;
-
-            _bookRepository.CommitTransactionAsync();
 
             return response;
         }
