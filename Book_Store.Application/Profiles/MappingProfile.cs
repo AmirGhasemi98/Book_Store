@@ -5,6 +5,7 @@ using Book_Store.Application.DTOs.BookImage;
 using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Comment;
 using Book_Store.Application.DTOs.Publisher;
+using Book_Store.Application.DTOs.Translator;
 using Book_Store.Domain.Entites;
 
 namespace Book_Store.Application.Profiles
@@ -28,6 +29,12 @@ namespace Book_Store.Application.Profiles
             CreateMap<Author, AuthorDto>().ReverseMap();
             CreateMap<Author, CreateAuthorDto>().ReverseMap();
             CreateMap<Author, UpdateAuthorDto>().ReverseMap();
+            #endregion
+
+            #region Translator
+            CreateMap<Translator, TranslatorDto>().ReverseMap();
+            CreateMap<Translator, CreateTranslatorDto>().ReverseMap();
+            CreateMap<Translator, UpdateTranslatorDto>().ReverseMap();
             #endregion
 
             #region Category
