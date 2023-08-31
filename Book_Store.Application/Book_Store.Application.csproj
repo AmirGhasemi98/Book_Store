@@ -32,6 +32,8 @@
     <Folder Include="Features\Orders\Handlers\Queries\" />
     <Folder Include="Features\Orders\Requests\Commands\" />
     <Folder Include="Features\Orders\Requests\Queries\" />
+    <Folder Include="Features\Translators\Handlers\Commands\" />
+    <Folder Include="Features\Translators\Requests\Commands\" />
   </ItemGroup>
 
 </Project>

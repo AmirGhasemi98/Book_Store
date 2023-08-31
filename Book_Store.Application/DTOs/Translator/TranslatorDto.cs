@@ -1,6 +1,8 @@
-﻿namespace Book_Store.Application.DTOs.Translator
+﻿using Book_Store.Application.DTOs.Common;
+
+namespace Book_Store.Application.DTOs.Translator
 {
-    public class TranslatorDto : ITranslatorDto
+    public class TranslatorDto : BaseDto, ITranslatorDto
     {
         public string FirstName { get; set; }
 
