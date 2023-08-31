@@ -28,6 +28,10 @@ namespace Book_Store.Persistence
 
         public DbSet<BookMapAuthor> BookMapAuthors { get; set; }
 
+        public DbSet<Translator> Translators { get; set; }
+
+        public DbSet<BookMapTranslator> BookMapTranslators { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

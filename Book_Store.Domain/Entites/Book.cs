@@ -28,6 +28,8 @@ namespace Book_Store.Domain.Entites
 
         public ICollection<BookMapAuthor> bookMapAuthors { get; set; }
 
+        public ICollection<BookMapTranslator> bookMapTranslators { get; set; }
+
         #endregion
 
     }
