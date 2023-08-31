@@ -1,14 +1,7 @@
-﻿using AutoMapper;
-using Book_Store.Application.Contracts.Persistence;
+﻿using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.Features.Translators.Requests.Commands;
 using Book_Store.Application.Responses;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Application.Features.Translators.Handlers.Commands
 {
