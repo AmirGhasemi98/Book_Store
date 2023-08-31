@@ -24,9 +24,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         {
             var image = await _mediator.Send(new GetBookImageRequest { BookId = id });
 
-            var contentType = image.ContentType();
-
-            return File(image, contentType, image.FileName());
+            return File(image.File, image.ContentType, image.FileName);
         }
 
     }
