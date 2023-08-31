@@ -10,12 +10,10 @@ namespace Book_Store.Application.Features.BookImages.Handlers.Commands
     public class CreateBookImageCommandHandler : IRequestHandler<CreateBookImageCommand, BaseCommandResponse>
     {
         private readonly IBookImageRepository _bookImageRepository;
-        private readonly IMapper _mapper;
 
-        public CreateBookImageCommandHandler(IBookImageRepository bookImageRepository, IMapper mapper)
+        public CreateBookImageCommandHandler(IBookImageRepository bookImageRepository)
         {
             _bookImageRepository = bookImageRepository;
-            _mapper = mapper;
         }
 
         public async Task<BaseCommandResponse> Handle(CreateBookImageCommand request, CancellationToken cancellationToken)
@@ -33,6 +31,8 @@ namespace Book_Store.Application.Features.BookImages.Handlers.Commands
             }
 
             bookImage.BookId = request.CreateBookImageDto.BookId;
+            bookImage.ContentType = request.CreateBookImageDto.Image.ContentType;
+            bookImage.FileName = request.CreateBookImageDto.Image.FileName;
 
             bookImage = await _bookImageRepository.Add(bookImage);
 
