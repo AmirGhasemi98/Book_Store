@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Application.DTOs.Author.Validators;
 using Book_Store.Application.DTOs.Translator.Validators;
 using Book_Store.Application.Features.Translators.Requests.Commands;
 using Book_Store.Application.Responses;
