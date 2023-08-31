@@ -8,7 +8,6 @@ using MediatR;
 using Book_Store.Application.Features.BookImages.Requests.Commands;
 using Book_Store.Application.Features.BookMapAuthors.Requests.Commands;
 using Book_Store.Application.DTOs.BookMapAuthor;
-using System.Transactions;
 
 namespace Book_Store.Application.Features.Books.Handlers.Commands
 {
@@ -68,6 +67,7 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
 
             if (!bookAuthorsResponse.Success)
             {
+                response.Success = false;
                 response.Errors.AddRange(bookAuthorsResponse.Errors);
 
                 await _bookRepository.RollbackTransactionAsync();

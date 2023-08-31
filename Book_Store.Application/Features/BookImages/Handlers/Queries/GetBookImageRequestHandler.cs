@@ -8,18 +8,16 @@ namespace Book_Store.Application.Features.BookImages.Handlers.Queries
     public class GetBookImageRequestHandler : IRequestHandler<GetBookImageRequest, byte[]>
     {
         private readonly IBookImageRepository _bookImageRepository;
-        private readonly IMapper _mapper;
 
 
-        public GetBookImageRequestHandler(IBookImageRepository bookImageRepository, IMapper mapper)
+        public GetBookImageRequestHandler(IBookImageRepository bookImageRepository)
         {
             _bookImageRepository = bookImageRepository;
-            _mapper = mapper;
         }
 
         public async Task<byte[]> Handle(GetBookImageRequest request, CancellationToken cancellationToken)
         {
-            var bookImage = await _bookImageRepository.Get(request.BookId);
+            var bookImage = await _bookImageRepository.GetBy(request.BookId);
             return bookImage.File;
         }
     }
