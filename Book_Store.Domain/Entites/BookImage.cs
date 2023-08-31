@@ -8,6 +8,10 @@ namespace Book_Store.Domain.Entites
 
         public Book Book { get; set; }
 
+        public string ContentType { get; set; }
+
+        public string FileName { get; set; }
+
         public byte[] File { get; set; }
     }
 }
