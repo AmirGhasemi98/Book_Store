@@ -38,7 +38,8 @@ namespace Book_Store.Application.Features.BookMapAuthors.Handlers.Commands
 
             #endregion
 
-            await _bookAuthorsRepository.DeleteBookAuthors(request.CreateBookAuthorDto.BookId);
+            if (request.CreateBookAuthorDto.ForUpdate)
+                await _bookAuthorsRepository.DeleteBookAuthors(request.CreateBookAuthorDto.BookId);
 
             var bookAuthors = new List<BookMapAuthor>();
             request.CreateBookAuthorDto.AuthorIds.ForEach(x => bookAuthors.Add(new BookMapAuthor { AuthorId = x, BookId = request.CreateBookAuthorDto.BookId }));

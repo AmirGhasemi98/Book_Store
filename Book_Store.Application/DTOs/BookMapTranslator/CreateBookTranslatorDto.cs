@@ -5,5 +5,7 @@
         public int BookId { get; set; }
 
         public List<int> TranslatorIds { get; set; }
+
+        public bool ForUpdate { get; set; }
     }
 }

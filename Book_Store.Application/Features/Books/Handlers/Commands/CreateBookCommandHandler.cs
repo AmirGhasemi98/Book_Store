@@ -34,7 +34,6 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
 
         public async Task<BaseCommandResponse> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-
             var response = new BaseCommandResponse();
 
             #region Validation
@@ -59,48 +58,58 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
 
             book = await _bookRepository.Add(book);
 
-            var bookAuthorsResponse = await _mediator.Send(new CreateBookAuthorCommand
+            if (request.CreateBookDto.AuthorIds is not null && request.CreateBookDto.AuthorIds.Any())
             {
-                CreateBookAuthorDto = new CreateBookAuthorDto
-                { BookId = book.Id, AuthorIds = request.CreateBookDto.AuthorIds }
-            });
-
-            if (!bookAuthorsResponse.Success)
-            {
-                response.Success = false;
-                response.Errors.AddRange(bookAuthorsResponse.Errors);
-
-                await _bookRepository.RollbackTransactionAsync();
-
-                return response;
-            }
-
-            var bookTranslatorResponse = await _mediator.Send(new CreateBookTranslatorCommand
-            {
-                CreateBookTranslatorDto = new CreateBookTranslatorDto
+                var bookAuthorsResponse = await _mediator.Send(new CreateBookAuthorCommand
                 {
-                    BookId = book.Id,
-                    TranslatorIds = request.CreateBookDto.TranslatorIds
+                    CreateBookAuthorDto = new CreateBookAuthorDto
+                    { BookId = book.Id, AuthorIds = request.CreateBookDto.AuthorIds, ForUpdate = false }
+                });
+
+                if (!bookAuthorsResponse.Success)
+                {
+                    response.Success = false;
+                    response.Errors.AddRange(bookAuthorsResponse.Errors);
+
+                    await _bookRepository.RollbackTransactionAsync();
+
+                    return response;
                 }
-            });
-
-            if (!bookTranslatorResponse.Success)
-            {
-                response.Success = false;
-                response.Errors.AddRange(bookAuthorsResponse.Errors);
-
-                await _bookRepository.RollbackTransactionAsync();
-
-                return response;
             }
 
-            var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
+            if (request.CreateBookDto.TranslatorIds is not null && request.CreateBookDto.TranslatorIds.Any())
             {
-                CreateBookImageDto = new DTOs.BookImage.CreateBookImageDto
-                { BookId = book.Id, Image = request.CreateBookDto.BookImage }
-            });
+                var bookTranslatorResponse = await _mediator.Send(new CreateBookTranslatorCommand
+                {
+                    CreateBookTranslatorDto = new CreateBookTranslatorDto
+                    {
+                        BookId = book.Id,
+                        TranslatorIds = request.CreateBookDto.TranslatorIds,
+                        ForUpdate = false
+                    }
+                });
 
-            response.Errors.AddRange(bookImageResponse.Errors);
+                if (!bookTranslatorResponse.Success)
+                {
+                    response.Success = false;
+                    response.Errors.AddRange(bookTranslatorResponse.Errors);
+
+                    await _bookRepository.RollbackTransactionAsync();
+
+                    return response;
+                }
+            }
+
+            if (request.CreateBookDto.BookImage is not null)
+            {
+                var bookImageResponse = await _mediator.Send(new CreateBookImageCommand
+                {
+                    CreateBookImageDto = new DTOs.BookImage.CreateBookImageDto
+                    { BookId = book.Id, Image = request.CreateBookDto.BookImage }
+                });
+
+                response.Errors.AddRange(bookImageResponse.Errors);
+            }
 
             await _bookRepository.CommitTransactionAsync();
 

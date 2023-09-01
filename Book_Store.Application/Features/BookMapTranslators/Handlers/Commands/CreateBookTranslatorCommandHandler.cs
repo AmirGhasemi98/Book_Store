@@ -38,7 +38,8 @@ namespace Book_Store.Application.Features.BookMapTranslators.Handlers.Commands
 
             #endregion
 
-            await _bookTranslatorsRepository.DeleteBookTranslators(request.CreateBookTranslatorDto.BookId);
+            if (request.CreateBookTranslatorDto.ForUpdate)
+                await _bookTranslatorsRepository.DeleteBookTranslators(request.CreateBookTranslatorDto.BookId);
 
             var bookTranslators = new List<BookMapTranslator>();
             request.CreateBookTranslatorDto.TranslatorIds.ForEach(x => bookTranslators.Add(new BookMapTranslator { TransLatorId = x, BookId = request.CreateBookTranslatorDto.BookId }));
