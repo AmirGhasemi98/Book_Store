@@ -18,6 +18,8 @@ namespace Book_Store.Application.DTOs.Book
 
         public List<int> AuthorIds  { get; set; }
 
+        public List<int> TranslatorIds { get; set; }
+
         public int PublisherId { get; set; }
 
 

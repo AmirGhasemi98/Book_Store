@@ -6,13 +6,11 @@ namespace Book_Store.Application.DTOs.Book.Validators
     public class IBookDtoValidator : AbstractValidator<IBookDto>
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IAuthorRepository _authorRepository;
         private readonly IPublisherRepository _publisherRepository;
 
-        public IBookDtoValidator(ICategoryRepository categoryRepository, IAuthorRepository authorRepository, IPublisherRepository publisherRepository)
+        public IBookDtoValidator(ICategoryRepository categoryRepository, IPublisherRepository publisherRepository)
         {
             _categoryRepository = categoryRepository;
-            _authorRepository = authorRepository;
             _publisherRepository = publisherRepository;
 
 
