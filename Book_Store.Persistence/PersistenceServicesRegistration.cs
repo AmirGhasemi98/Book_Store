@@ -62,6 +62,8 @@ namespace Book_Store.Persistence
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IBookImageRepository, BookImageRepository>();
             services.AddScoped<IBookAuthorsRepository, BookAuthorsRepository>();
+            services.AddScoped<IBookTranslatorsRepository, BookTranslatorsRepository>();
+            services.AddScoped<ITranslatorRepository, TranslatorRepository>();
 
             return services;
         }

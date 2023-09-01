@@ -16,9 +16,9 @@ namespace Book_Store.Application.DTOs.Book
 
         public int CategoryId { get; set; }
 
-        public List<int> AuthorIds  { get; set; }
+        public List<int>? AuthorIds  { get; set; }
 
-        public List<int> TranslatorIds { get; set; }
+        public List<int>? TranslatorIds { get; set; }
 
         public int PublisherId { get; set; }
 
