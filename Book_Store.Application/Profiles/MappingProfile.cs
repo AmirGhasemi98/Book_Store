@@ -15,10 +15,30 @@ namespace Book_Store.Application.Profiles
         public MappingProfile()
         {
             #region Book
-            CreateMap<Book, BookDto>().ReverseMap();
+
+
+            CreateMap<Book, BookDto>()
+                .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.bookMapAuthors))
+                .ForMember(dest => dest.Translators, opt => opt.MapFrom(src => src.bookMapTranslators));
+
+
             CreateMap<Book, CreateBookDto>().ReverseMap();
             CreateMap<Book, UpdateBookDto>().ReverseMap();
 
+            #endregion
+
+            #region Book Map Author
+            CreateMap<BookMapAuthor, AuthorDto>()
+               .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Author.FirstName))
+               .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Author.LastName))
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AuthorId));
+            #endregion
+
+            #region Book Map Translator
+            CreateMap<BookMapTranslator, TranslatorDto>()
+              .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.Translator.FirstName))
+              .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.Translator.LastName))
+              .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.TransLatorId));
             #endregion
 
             #region Book Image

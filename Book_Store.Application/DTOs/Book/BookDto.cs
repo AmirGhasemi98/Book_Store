@@ -2,12 +2,7 @@
 using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Common;
 using Book_Store.Application.DTOs.Publisher;
-using Book_Store.Domain.Entites;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Book_Store.Application.DTOs.Translator;
 
 namespace Book_Store.Application.DTOs.Book
 {
@@ -25,9 +20,9 @@ namespace Book_Store.Application.DTOs.Book
 
         public CategoryDto Category { get; set; }
 
-        public int AuthorId { get; set; }
+        public List<AuthorDto> Authors { get; set; }
 
-        public AuthorDto Author { get; set; }
+        public List<TranslatorDto> Translators { get; set; }
 
         public int PublisherId { get; set; }
 
