@@ -15,8 +15,6 @@ namespace Book_Store.Application.Profiles
         public MappingProfile()
         {
             #region Book
-
-
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.bookMapAuthors))
                 .ForMember(dest => dest.Translators, opt => opt.MapFrom(src => src.bookMapTranslators));
@@ -58,6 +56,9 @@ namespace Book_Store.Application.Profiles
             #endregion
 
             #region Category
+            CreateMap<Category, GetAllCategoryDto>().ReverseMap()
+               .ForMember(dest => dest.Children, opt => opt.MapFrom(src => src.Children));
+
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<Category, CreateCategoryDto>().ReverseMap();
             CreateMap<Category, UpdateCategoryDto>().ReverseMap();

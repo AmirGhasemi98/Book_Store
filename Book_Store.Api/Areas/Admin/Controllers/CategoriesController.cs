@@ -19,6 +19,14 @@ namespace Book_Store.Api.Areas.Admin.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _mediator.Send(new GetAllCategoryRequest()); 
+            return Ok(result);
+        }
+
+
         // GET: api/<CategoriesController>
         [HttpGet]
         public async Task<IActionResult> Get()
