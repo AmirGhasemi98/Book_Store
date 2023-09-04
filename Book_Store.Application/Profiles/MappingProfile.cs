@@ -15,6 +15,10 @@ namespace Book_Store.Application.Profiles
         public MappingProfile()
         {
             #region Book
+
+            CreateMap<Book, BookListDto>()
+                .ForMember(dest => dest.AuthorsFullName, opt => opt.MapFrom(src => src.bookMapAuthors.Select(x => x.Author.FirstName + " " + x.Author.LastName)));
+
             CreateMap<Book, BookDto>()
                 .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.bookMapAuthors))
                 .ForMember(dest => dest.Translators, opt => opt.MapFrom(src => src.bookMapTranslators));

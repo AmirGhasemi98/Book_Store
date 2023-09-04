@@ -13,6 +13,16 @@ namespace Book_Store.Persistence.Repositories
             _context = context;
         }
 
+        public async Task<List<Book>> GetBookListByCategory(int? categoryId)
+        {
+            var query = _context.Books.AsNoTracking();
+
+            if (categoryId.HasValue)
+                query = query.Where(x => x.CategoryId == categoryId);
+
+            return await query.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).ToListAsync();
+        }
+
         public async Task<List<Book>> GetBooksWithDetailes()
         {
             return await _context.Books.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).Include(b => b.Publisher)

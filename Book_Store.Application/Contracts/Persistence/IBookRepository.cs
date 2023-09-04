@@ -7,5 +7,7 @@ namespace Book_Store.Application.Contracts.Persistence
         Task<List<Book>> GetBooksWithDetailes();
 
         Task<Book> GetBookWithDetaile(int id);
+
+        Task<List<Book>> GetBookListByCategory(int? categoryId);
     }
 }

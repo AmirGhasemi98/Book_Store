@@ -8,6 +8,6 @@ namespace Book_Store.Application.DTOs.Book
 
         public string Title { get; set; }
 
-        public string AuthorFullName { get; set; }
+        public List<string> AuthorsFullName { get; set; }
     }
 }
