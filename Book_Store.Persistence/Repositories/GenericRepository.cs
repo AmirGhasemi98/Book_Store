@@ -1,7 +1,5 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Book_Store.Persistence.Repositories
 {
