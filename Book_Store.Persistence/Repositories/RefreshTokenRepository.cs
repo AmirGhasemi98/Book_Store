@@ -17,5 +17,10 @@ namespace Book_Store.Persistence.Repositories
         {
             return await _context.RefreshTokens.FirstOrDefaultAsync(r => r.Refresh_Token == refreshToken);
         }
+
+        public async Task<List<RefreshToken>> GetUserRefreshTokens(int userId, string jwtTokenId)
+        {
+            return await _context.RefreshTokens.Where(u => u.UserId == userId && u.JwtTokenId == jwtTokenId).ToListAsync();
+        }
     }
 }

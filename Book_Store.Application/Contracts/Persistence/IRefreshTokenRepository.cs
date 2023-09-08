@@ -5,5 +5,7 @@ namespace Book_Store.Application.Contracts.Persistence
     public interface IRefreshTokenRepository : IGenericRepository<RefreshToken>
     {
         Task<RefreshToken> GetRefreshToken(string refreshToken);
+
+        Task<List<RefreshToken>> GetUserRefreshTokens(int userId, string jwtTokenId);
     }
 }
