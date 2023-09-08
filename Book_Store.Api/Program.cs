@@ -1,6 +1,9 @@
+using Book_Store.Api;
 using Book_Store.Application;
 using Book_Store.Persistence;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +16,8 @@ builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-AddSwagger(builder.Services);
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(o =>
 {
@@ -54,44 +57,6 @@ app.MapAreaControllerRoute(
 app.Run();
 
 
-void AddSwagger(IServiceCollection services)
-{
-    services.AddSwaggerGen(o =>
-    {
-        o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-        {
-            Description = @"JWT Authorization header using the Bearer scheme. 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      Example: 'Bearer 1234sddsw'",
-            Name = "Authorization",
-            In = ParameterLocation.Header,
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer"
-        });
 
-        o.AddSecurityRequirement(new OpenApiSecurityRequirement()
-        {
-            {
-                new OpenApiSecurityScheme()
-                {
-                    Reference = new OpenApiReference()
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    },
-                    Scheme = "oauth2",
-                    Name = "Bearer",
-                    In = ParameterLocation.Header
-                },
-                new List<string>()
-            }
-        });
 
-        o.SwaggerDoc("v1", new OpenApiInfo()
-        {
-            Version = "v1",
-            Title = "Book Store Api"
-        });
-    });
-}
 
