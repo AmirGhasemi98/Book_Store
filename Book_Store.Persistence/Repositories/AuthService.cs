@@ -1,8 +1,8 @@
 ﻿using Book_Store.Application.Constance;
 using Book_Store.Application.Contracts.Identity;
+using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Domain.Identity;
-using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -17,14 +17,16 @@ namespace Book_Store.Persistence.Repositories
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtSettings _jwtSettings;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IMediator _mediator;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings, SignInManager<ApplicationUser> signInManager, IMediator mediator)
+
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<JwtSettings> jwtSettings,
+            SignInManager<ApplicationUser> signInManager, IRefreshTokenRepository refreshTokenRepository)
         {
             _userManager = userManager;
             _jwtSettings = jwtSettings.Value;
             _signInManager = signInManager;
-            _mediator = mediator;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
         #region Register
@@ -85,26 +87,24 @@ namespace Book_Store.Persistence.Repositories
                 throw new Exception("عملیات با شکست روبرو شد.");
             }
 
-            JwtSecurityToken jwtSecurityToken = await GenerateToken(user);
+            var jwtTokenId = Guid.NewGuid().ToString();
 
+            JwtSecurityToken jwtSecurityToken = await GenerateToken(user, jwtTokenId);
+            var refreshToken = await CreateNewRefreshToken(user.Id, jwtTokenId);
             AuthResponse response = new AuthResponse()
             {
                 Id = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Email = user.Email,
                 UserName = user.UserName,
+                RefreshToken = refreshToken
             };
 
             return response;
 
         }
 
-        //public Task<AuthRequset> RefreshToken(string Token)
-        //{
-
-        //}
-
-        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user)
+        private async Task<JwtSecurityToken> GenerateToken(ApplicationUser user, string jwtTokenId)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
@@ -119,7 +119,7 @@ namespace Book_Store.Persistence.Repositories
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti,jwtTokenId),
                 new Claim(JwtRegisteredClaimNames.Email,user.Email),
                 new Claim(CustomClaimTypes.Uid,user.Id.ToString()),
             }
@@ -141,7 +141,100 @@ namespace Book_Store.Persistence.Repositories
             return jwtSecurityToken;
         }
 
+        public async Task<AuthResponse> RefreshAccessToken(AuthResponse Token)
+        {
+            //Find an existing refresh token
+            var existingRefreshToken = await _refreshTokenRepository.GetRefreshToken(Token.RefreshToken);
+            if (existingRefreshToken is null)
+                return new AuthResponse();
+
+            //compare data from existing refresh and access tiken provider and if there is any missmatch then consider it
+            var accessTokenData = GetAccessTokenData(Token.Token);
+            if (!accessTokenData.isSuccessful || accessTokenData.userId != existingRefreshToken.UserId ||
+                accessTokenData.tokenId != existingRefreshToken.JwtTokenId)
+            {
+                existingRefreshToken.IsValid = false;
+                await _refreshTokenRepository.Update(existingRefreshToken);
+                return new AuthResponse();
+            }
+
+            //when someone tries to use not valid refresh token ,  fraud possible
+            if (!existingRefreshToken.IsValid)
+            {
+                var chainRecords = await _refreshTokenRepository.GetUserRefreshTokens(existingRefreshToken.UserId, existingRefreshToken.JwtTokenId);
+
+                chainRecords.ForEach(x => x.IsValid = false);
+                
+                await _refreshTokenRepository.UpdateRange(chainRecords);
+                return new AuthResponse();
+            }
+
+            //If just expired then mark as invalid and return empty
+            if (existingRefreshToken.ExpireAt < DateTime.UtcNow)
+            {
+                existingRefreshToken.IsValid = false;
+                await _refreshTokenRepository.Update(existingRefreshToken);
+                return new AuthResponse();
+            }
 
 
+            //replace old refresh wiht a new one with update expire date  
+            var newRefrashToken = await CreateNewRefreshToken(existingRefreshToken.UserId, existingRefreshToken.JwtTokenId);
+
+            //revoke existing refresh token
+            existingRefreshToken.IsValid = false;
+            await _refreshTokenRepository.Update(existingRefreshToken);
+
+            //generate new access token
+            var applicationUser = await _userManager.FindByIdAsync(existingRefreshToken.UserId.ToString());
+            if (applicationUser is null)
+                return new AuthResponse();
+
+            var newAccessToken = await GenerateToken(applicationUser, existingRefreshToken.JwtTokenId);
+
+            return new AuthResponse
+            {
+                Id = applicationUser.Id,
+                Email = applicationUser.Email,
+                UserName = applicationUser.UserName,
+                Token = new JwtSecurityTokenHandler().WriteToken(newAccessToken),
+                RefreshToken = newRefrashToken
+            };
+
+        }
+
+
+        private async Task<string> CreateNewRefreshToken(int userId, string tokenId)
+        {
+            RefreshToken refreshToken = new()
+            {
+                IsValid = true,
+                UserId = userId,
+                JwtTokenId = tokenId,
+                ExpireAt = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                Refresh_Token = Guid.NewGuid() + "-" + Guid.NewGuid(),
+            };
+
+            await _refreshTokenRepository.Add(refreshToken);
+
+            return refreshToken.Refresh_Token;
+
+        }
+
+        private (bool isSuccessful, int? userId, string tokenId) GetAccessTokenData(string accessToken)
+        {
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var jwt = tokenHandler.ReadJwtToken(accessToken);
+                var jwtTokenId = jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Jti).Value;
+                var userId = jwt.Claims.FirstOrDefault(u => u.Type == CustomClaimTypes.Uid).Value;
+                return (true, int.Parse(userId), jwtTokenId);
+            }
+            catch
+            {
+                return (false, null, null);
+            }
+        }
     }
 }

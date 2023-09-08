@@ -1,5 +1,6 @@
 ﻿using Book_Store.Application.Contracts.Identity;
 using Book_Store.Application.Models.Identity;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,12 @@ namespace Book_Store.Api.Controllers
         public async Task<ActionResult<RegistrationResponse>> Register(RegistrationRequest request)
         {
             return Ok(await _authService.Register(request));
+        }
+
+        [HttpPost("RefreshToken")]
+        public async Task<ActionResult<AuthResponse>> RefreshToken([FromBody] AuthResponse request)
+        {
+            return Ok(await _authService.RefreshAccessToken(request));
         }
     }
 }
