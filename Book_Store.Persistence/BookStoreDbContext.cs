@@ -32,6 +32,8 @@ namespace Book_Store.Persistence
 
         public DbSet<BookMapTranslator> BookMapTranslators { get; set; }
 
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
