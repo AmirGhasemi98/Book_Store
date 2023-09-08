@@ -211,7 +211,7 @@ namespace Book_Store.Persistence.Repositories
                 IsValid = true,
                 UserId = userId,
                 JwtTokenId = tokenId,
-                ExpireAt = DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
+                ExpireAt = DateTime.UtcNow.AddMinutes(70),
                 Refresh_Token = Guid.NewGuid() + "-" + Guid.NewGuid(),
             };
 
