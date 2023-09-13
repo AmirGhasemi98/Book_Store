@@ -1,5 +1,6 @@
 ﻿using Book_Store.Application.Contracts.Identity;
 using Book_Store.Application.Contracts.Persistence;
+using Book_Store.Application.Identity;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Domain.Identity;
 using Book_Store.Persistence.Repositories;
@@ -31,8 +32,14 @@ namespace Book_Store.Persistence
                 options.Password.RequiredUniqueChars = 0;
 
                 options.User.RequireUniqueEmail = true;
+
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-";
+
+
             })
-               .AddEntityFrameworkStores<BookStoreDbContext>().AddDefaultTokenProviders();
+               .AddEntityFrameworkStores<BookStoreDbContext>()
+               .AddDefaultTokenProviders()
+               .AddErrorDescriber<PersianIdentityErrorDescriber>();
 
             services.AddTransient<IAuthService, AuthService>();
             //services.AddTransient<IUserService, UserService>();
