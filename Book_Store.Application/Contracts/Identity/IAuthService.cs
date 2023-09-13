@@ -13,5 +13,7 @@ namespace Book_Store.Application.Contracts.Identity
         Task LogOut();
 
         Task<string> IsEmailInUse(string email);
+
+        Task<string> IsUserNameInUse(string userName);
     }
 }

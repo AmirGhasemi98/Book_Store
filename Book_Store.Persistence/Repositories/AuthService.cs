@@ -4,6 +4,7 @@ using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.Models.Identity;
 using Book_Store.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -248,6 +249,13 @@ namespace Book_Store.Persistence.Repositories
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return "True";
             return "ایمیل وارد شده از قبل موجود است";
+        }
+
+        public async Task<string> IsUserNameInUse(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null) return "True";
+            return "نام کاربری وارد شده از قبل موجود است";
         }
     }
 }

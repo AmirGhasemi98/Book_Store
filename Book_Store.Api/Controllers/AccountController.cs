@@ -51,5 +51,13 @@ namespace Book_Store.Api.Controllers
             return Ok(result);
         }
 
+
+        public async Task<IActionResult> IsUserNameInUse(string userName)
+        {
+            var result = await _authService.IsUserNameInUse(userName);
+            if (result != "True") return BadRequest(result);
+            return Ok(result);
+        }
+
     }
 }
