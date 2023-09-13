@@ -5,11 +5,11 @@ namespace Book_Store.Application.Identity
     public class PersianIdentityErrorDescriber : IdentityErrorDescriber
     {
         public override IdentityError DuplicateEmail(string email)
-           => new IdentityError()
-           {
-               Code = nameof(DuplicateEmail),
-               Description = $"ایمیل '{email}' قبلا توسط شخص دیگری انتخاب شده است"
-           };
+            => new IdentityError()
+            {
+                Code = nameof(DuplicateEmail),
+                Description = $"ایمیل '{email}' قبلا توسط شخص دیگری انتخاب شده است"
+            };
 
         public override IdentityError DuplicateUserName(string userName)
             => new IdentityError()
