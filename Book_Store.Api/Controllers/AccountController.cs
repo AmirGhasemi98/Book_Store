@@ -2,6 +2,7 @@
 using Book_Store.Application.Models.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Store.Api.Controllers
@@ -41,5 +42,14 @@ namespace Book_Store.Api.Controllers
         {
             await _authService.LogOut();
         }
+
+        [HttpPost("IsEmailInUse/{email}")]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var result = await _authService.IsEmailInUse(email);
+            if (result != "True") return BadRequest(result);
+            return Ok(result);
+        }
+
     }
 }

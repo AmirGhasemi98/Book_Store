@@ -11,5 +11,7 @@ namespace Book_Store.Application.Contracts.Identity
         Task<AuthResponse> RefreshAccessToken(AuthResponse Token);
 
         Task LogOut();
+
+        Task<string> IsEmailInUse(string email);
     }
 }

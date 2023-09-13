@@ -49,7 +49,7 @@ namespace Book_Store.Persistence.Repositories
             };
 
             var existingEmail = await _userManager.FindByEmailAsync(request.Email);
-            if (existingUser == null)
+            if (existingEmail == null)
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
 
@@ -241,6 +241,13 @@ namespace Book_Store.Persistence.Repositories
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<string> IsEmailInUse(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return "True";
+            return "ایمیل وارد شده از قبل موجود است";
         }
     }
 }
