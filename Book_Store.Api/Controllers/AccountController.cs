@@ -44,6 +44,7 @@ namespace Book_Store.Api.Controllers
         }
 
         [HttpPost("IsEmailInUse/{email}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> IsEmailInUse(string email)
         {
             var result = await _authService.IsEmailInUse(email);
@@ -51,7 +52,8 @@ namespace Book_Store.Api.Controllers
             return Ok(result);
         }
 
-
+        [HttpPost("IsUserNameInUse/{userName}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> IsUserNameInUse(string userName)
         {
             var result = await _authService.IsUserNameInUse(userName);
