@@ -9,5 +9,7 @@ namespace Book_Store.Application.Contracts.Identity
         Task<RegistrationResponse> Register(RegistrationRequest request);
 
         Task<AuthResponse> RefreshAccessToken(AuthResponse Token);
+
+        Task LogOut();
     }
 }

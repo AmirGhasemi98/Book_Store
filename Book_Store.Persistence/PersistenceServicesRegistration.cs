@@ -26,7 +26,12 @@ namespace Book_Store.Persistence
 
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
-            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
+            {
+                options.Password.RequiredUniqueChars = 0;
+
+                options.User.RequireUniqueEmail = true;
+            })
                .AddEntityFrameworkStores<BookStoreDbContext>().AddDefaultTokenProviders();
 
             services.AddTransient<IAuthService, AuthService>();

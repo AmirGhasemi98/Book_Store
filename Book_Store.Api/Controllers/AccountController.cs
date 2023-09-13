@@ -34,5 +34,12 @@ namespace Book_Store.Api.Controllers
         {
             return Ok(await _authService.RefreshAccessToken(request));
         }
+
+        [HttpPost("LogOut")]
+        [ValidateAntiForgeryToken]
+        public async Task LogOut()
+        {
+            await _authService.LogOut();
+        }
     }
 }

@@ -80,12 +80,13 @@ namespace Book_Store.Persistence.Repositories
             if (user is null)
                 throw new Exception("کاربر یافت نشد.");
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, requset.Password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, requset.Password, requset.RememberMe, lockoutOnFailure: false);
+
+            if (result.IsLockedOut)
+                throw new Exception("اکانت شما به دلیل پنج بار ورود ناموفق به مدت پنج دقیقه قفل شده است.");
 
             if (!result.Succeeded)
-            {
                 throw new Exception("عملیات با شکست روبرو شد.");
-            }
 
             var jwtTokenId = Guid.NewGuid().ToString();
 
@@ -164,7 +165,7 @@ namespace Book_Store.Persistence.Repositories
                 var chainRecords = await _refreshTokenRepository.GetUserRefreshTokens(existingRefreshToken.UserId, existingRefreshToken.JwtTokenId);
 
                 chainRecords.ForEach(x => x.IsValid = false);
-                
+
                 await _refreshTokenRepository.UpdateRange(chainRecords);
                 return new AuthResponse();
             }
@@ -235,6 +236,11 @@ namespace Book_Store.Persistence.Repositories
             {
                 return (false, null, null);
             }
+        }
+
+        public async Task LogOut()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
