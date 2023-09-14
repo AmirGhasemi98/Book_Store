@@ -5,8 +5,10 @@ using Book_Store.Application.DTOs.BookImage;
 using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Comment;
 using Book_Store.Application.DTOs.Publisher;
+using Book_Store.Application.DTOs.Role;
 using Book_Store.Application.DTOs.Translator;
 using Book_Store.Domain.Entites;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Store.Application.Profiles
 {
@@ -79,7 +81,11 @@ namespace Book_Store.Application.Profiles
             CreateMap<Comment, CreateCommentDto>().ReverseMap();
             #endregion
 
+            #region Role
 
+            CreateMap<IdentityRole<int>, RoleDto>();
+
+            #endregion
 
         }
     }
