@@ -50,9 +50,16 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // PUT api/<RolesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(UpdateRoleDto updateRole)
         {
-            throw new Exception();
+            var command = new UpdateRoleCommnd { UpdateRoleDto = updateRole };
+            var response = await _mediator.Send(command);
+
+            if (!response.Success)
+                return BadRequest(response.Errors);
+
+            return Ok(response);
+
         }
 
         // DELETE api/<RolesController>/5
