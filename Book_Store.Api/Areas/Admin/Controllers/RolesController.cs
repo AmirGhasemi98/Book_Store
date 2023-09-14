@@ -1,4 +1,6 @@
-﻿using Book_Store.Application.Features.Roles.Requests.Queries;
+﻿using Book_Store.Application.DTOs.Role;
+using Book_Store.Application.Features.Roles.Requests.Commands;
+using Book_Store.Application.Features.Roles.Requests.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,21 +29,30 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // GET api/<RolesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var role = await _mediator.Send(new GetRoleDetaileRequest { Id = id });
+            return Ok(role);
         }
 
         // POST api/<RolesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateRoleDto createRole)
         {
+            var command = new CreateRoleCommand { CreateRoleDto = createRole };
+            var response = await _mediator.Send(command);
+
+            if (!response.Success)
+                return BadRequest(response.Errors);
+
+            return Ok(response);
         }
 
         // PUT api/<RolesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+            throw new Exception();
         }
 
         // DELETE api/<RolesController>/5
