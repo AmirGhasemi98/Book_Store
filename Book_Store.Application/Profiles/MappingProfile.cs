@@ -84,7 +84,8 @@ namespace Book_Store.Application.Profiles
             #region Role
 
             CreateMap<IdentityRole<int>, RoleDto>();
-
+            CreateMap<IdentityRole<int>, CreateRoleDto>().ReverseMap();
+            CreateMap<IdentityRole<int>, UpdateRoleDto>().ReverseMap();
             #endregion
 
         }

@@ -49,7 +49,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         }
 
         // PUT api/<RolesController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put(UpdateRoleDto updateRole)
         {
             var command = new UpdateRoleCommnd { UpdateRoleDto = updateRole };
@@ -64,8 +64,15 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // DELETE api/<RolesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeleteRoleCommand { Id = id };
+            var response = await _mediator.Send(command);
+
+            if (!response.Success)
+                return BadRequest(response.Errors);
+
+            return Ok(response);
         }
     }
 }
