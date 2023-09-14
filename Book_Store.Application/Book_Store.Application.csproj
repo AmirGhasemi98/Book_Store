@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTOs\Role\Validators\" />
     <Folder Include="Features\BookMapAuthors\Handlers\Queries\" />
     <Folder Include="Features\BookMapAuthors\Requests\Queries\" />
     <Folder Include="Features\BookMapTranslators\Handlers\Queries\" />
@@ -34,6 +35,8 @@
     <Folder Include="Features\Orders\Handlers\Queries\" />
     <Folder Include="Features\Orders\Requests\Commands\" />
     <Folder Include="Features\Orders\Requests\Queries\" />
+    <Folder Include="Features\Roles\Handlers\Commands\" />
+    <Folder Include="Features\Roles\Requests\Commands\" />
   </ItemGroup>
 
 </Project>
