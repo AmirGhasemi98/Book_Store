@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.Role
 {
-    public class CreateRoleDto : IRoleDto
+    public interface IRoleDto
     {
         public string Name { get; set; }
     }

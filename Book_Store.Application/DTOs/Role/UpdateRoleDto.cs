@@ -1,9 +1,9 @@
-﻿namespace Book_Store.Application.DTOs.Role
-{
-    public class UpdateRoleDto
-    {
-        public int Id { get; set; }
+﻿using Book_Store.Application.DTOs.Common;
 
+namespace Book_Store.Application.DTOs.Role
+{
+    public class UpdateRoleDto : BaseDto, IRoleDto
+    {
         public string Name { get; set; }
 
     }
