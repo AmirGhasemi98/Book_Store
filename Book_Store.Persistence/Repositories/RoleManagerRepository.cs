@@ -1,12 +1,5 @@
 ﻿using Book_Store.Application.Contracts.Identity;
-using Book_Store.Application.DTOs.Role;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Book_Store.Persistence.Repositories
 {
@@ -30,21 +23,44 @@ namespace Book_Store.Persistence.Repositories
             return role;
         }
 
-        public async Task<string> Create(IdentityRole<int> role)
+        public async Task<(List<string>, bool)> Create(IdentityRole<int> role)
         {
-            var result = await _roleManager.CreateAsync(role);
-            if (result.Succeeded) return "عملیات با موفقیت انجام شد.";
+            List<string> messages = new List<string>();
 
-            return result.Errors.First().Description;
+            var result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
+                messages.Add("عملیات با موفقیت انجام شد.");
+
+                return (messages, true);
+            }
+
+            foreach (var err in result.Errors)
+            {
+                messages.Add(err.Description);
+            }
+
+            return (messages, false);
         }
 
-        public async Task<string> Update(IdentityRole<int> role)
+        public async Task<(List<string>, bool)> Update(IdentityRole<int> role)
         {
+            List<string> messages = new List<string>();
+
             var result = await _roleManager.UpdateAsync(role);
 
-            if (result.Succeeded) return "عملیات با موفقیت انجام شد.";
+            if (result.Succeeded)
+            {
+                messages.Add("عملیات با موفقیت انجام شد.");
+                return (messages, true);
+            }
 
-            return result.Errors.First().Description;
+            foreach (var err in result.Errors)
+            {
+                messages.Add(err.Description);
+            }
+
+            return (messages, false);
         }
 
         public async Task<string> Delete(IdentityRole<int> role)

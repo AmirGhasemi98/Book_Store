@@ -8,9 +8,9 @@ namespace Book_Store.Application.Contracts.Identity
 
         Task<IdentityRole<int>> Get(int id);
 
-        Task<string> Create(IdentityRole<int> role);
+        Task<(List<string>, bool)> Create(IdentityRole<int> role);
 
-        Task<string> Update(IdentityRole<int> role);
+        Task<(List<string>, bool)> Update(IdentityRole<int> role);
 
         Task<string> Delete(IdentityRole<int> role);
     }
