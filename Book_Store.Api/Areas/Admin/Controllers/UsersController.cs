@@ -64,8 +64,15 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeleteUserCommand { Id = id };
+            var response = await _mediator.Send(command);
+
+            if (!response.Success)
+                return BadRequest(response.Errors);
+
+            return Ok(response);
         }
     }
 }
