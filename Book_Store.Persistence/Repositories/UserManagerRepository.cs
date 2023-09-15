@@ -31,17 +31,9 @@ namespace Book_Store.Persistence.Repositories
         {
             var roles = _roleManager.Roles.ToList();
 
-            List<IdentityRole<int>> userRoles = new List<IdentityRole<int>>();
+            var userRoless =await _userManager.GetRolesAsync(user);
 
-            foreach (var role in roles)
-            {
-                if (await _userManager.IsInRoleAsync(user, role.Name))
-                {
-                    userRoles.Add(role);
-                }
-            }
-
-            return userRoles;
+            return await _roleManager.Roles.Where(r => userRoless.Contains(r.Name)).ToListAsync();
         }
 
         public async Task<List<string>> Add(ApplicationUser user, List<IdentityRole<int>> roles, string password)
@@ -72,9 +64,9 @@ namespace Book_Store.Persistence.Repositories
         {
             List<string> messages = new List<string>();
 
-            var userRoles = await GetUserRoles(user);
+            var userRoles = await _userManager.GetRolesAsync(user);
 
-            var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles.Select(x => x.Name));
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles);
 
             if (!removeResult.Succeeded)
             {
