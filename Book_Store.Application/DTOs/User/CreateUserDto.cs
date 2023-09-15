@@ -1,6 +1,6 @@
 ﻿namespace Book_Store.Application.DTOs.User
 {
-    public class CreateUserDto
+    public class CreateUserDto : IUserDto
     {        
         public string FirstName { get; set; }
         

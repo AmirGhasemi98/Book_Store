@@ -1,8 +1,12 @@
-﻿using Book_Store.Application.DTOs.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Book_Store.Application.DTOs.User
 {
-    public class UpdateUserDto : BaseDto, IUserDto
+    public interface IUserDto
     {
         public string FirstName { get; set; }
 
@@ -12,7 +16,7 @@ namespace Book_Store.Application.DTOs.User
 
         public string UserName { get; set; }
 
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
         public List<int> RoleIds { get; set; }
     }

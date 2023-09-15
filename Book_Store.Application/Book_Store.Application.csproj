@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\User\Validators\" />
     <Folder Include="Features\BookMapAuthors\Handlers\Queries\" />
     <Folder Include="Features\BookMapAuthors\Requests\Queries\" />
     <Folder Include="Features\BookMapTranslators\Handlers\Queries\" />

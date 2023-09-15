@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Book_Store.Application.Contracts.Identity;
+using Book_Store.Application.DTOs.User.Validators;
 using Book_Store.Application.Features.Users.Requests.Commands;
 using Book_Store.Application.Responses;
-using Book_Store.Domain.Identity;
 using MediatR;
 
 namespace Book_Store.Application.Features.Users.Handlers.Commands
@@ -23,6 +23,22 @@ namespace Book_Store.Application.Features.Users.Handlers.Commands
         public async Task<BaseCommandResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var response = new BaseCommandResponse();
+
+            #region Validation
+
+            var validator = new UpdateUserDtoValidator();
+            var validationResult = await validator.ValidateAsync(request.UpdateUserDTO);
+
+            if (!validationResult.IsValid)
+            {
+                response.Success = false;
+                response.Message = "مشکلی پیش آمده است.";
+                response.Errors = validationResult.Errors.Select(e => e.ErrorMessage).ToList();
+
+                return response;
+            }
+
+            #endregion
 
             var user = await _userManagerRepository.Get(request.UpdateUserDTO.Id);
 
