@@ -7,7 +7,9 @@ using Book_Store.Application.DTOs.Comment;
 using Book_Store.Application.DTOs.Publisher;
 using Book_Store.Application.DTOs.Role;
 using Book_Store.Application.DTOs.Translator;
+using Book_Store.Application.DTOs.User;
 using Book_Store.Domain.Entites;
+using Book_Store.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Book_Store.Application.Profiles
@@ -86,6 +88,12 @@ namespace Book_Store.Application.Profiles
             CreateMap<IdentityRole<int>, RoleDto>();
             CreateMap<IdentityRole<int>, CreateRoleDto>().ReverseMap();
             CreateMap<IdentityRole<int>, UpdateRoleDto>().ReverseMap();
+            #endregion
+
+            #region User
+
+            CreateMap<ApplicationUser, UserDto>().ReverseMap();
+
             #endregion
 
         }

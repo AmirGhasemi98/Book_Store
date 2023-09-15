@@ -78,6 +78,7 @@ namespace Book_Store.Persistence
             services.AddScoped<ITranslatorRepository, TranslatorRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IRoleManagerRepository, RoleManagerRepository>();
+            services.AddScoped<IUserManagerRepository, UserManagerRepository>();
 
             return services;
         }
