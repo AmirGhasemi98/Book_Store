@@ -28,7 +28,14 @@ namespace Book_Store.Application.Features.Users.Handlers.Commands
 
             var roles = await _roleManagerRepository.GetList(request.CreateUserDto.RoleIds);
 
-            var test = roles.ExceptBy(request.CreateUserDto.RoleIds, x => x.Id);
+            if (request.CreateUserDto.RoleIds.Except(roles.Select(x => x.Id)).Any())
+            {
+                response.Success = false;
+                response.Message = "مشکلی پیش آمده است.";
+                response.Errors = new List<string> { "نقش های وارد شده معتبر نمی باشند." };
+
+                return response;
+            }
 
             var result = await _userManagerRepository.Add(user, roles, request.CreateUserDto.Password);
 
