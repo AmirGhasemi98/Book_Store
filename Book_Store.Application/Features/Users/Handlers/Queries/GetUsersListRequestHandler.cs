@@ -4,7 +4,7 @@ using Book_Store.Application.DTOs.User;
 using Book_Store.Application.Features.Users.Requests.Queries;
 using MediatR;
 
-namespace Book_Store.Application.Features.Users.Handlers.Commands
+namespace Book_Store.Application.Features.Users.Handlers.Queries
 {
     public class GetUsersListRequestHandler : IRequestHandler<GetUsersListRequest, List<UserDto>>
     {

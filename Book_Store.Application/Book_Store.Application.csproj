@@ -35,7 +35,7 @@
     <Folder Include="Features\Orders\Handlers\Queries\" />
     <Folder Include="Features\Orders\Requests\Commands\" />
     <Folder Include="Features\Orders\Requests\Queries\" />
-    <Folder Include="Features\Users\Handlers\Queries\" />
+    <Folder Include="Features\Users\Handlers\Commands\" />
     <Folder Include="Features\Users\Requests\Commands\" />
   </ItemGroup>
 
