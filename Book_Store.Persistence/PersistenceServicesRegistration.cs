@@ -30,6 +30,8 @@ namespace Book_Store.Persistence
             services.AddIdentity<ApplicationUser, IdentityRole<int>>(options =>
             {
                 options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
 
                 options.User.RequireUniqueEmail = true;
 
