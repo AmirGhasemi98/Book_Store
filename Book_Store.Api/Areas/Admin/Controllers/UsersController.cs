@@ -1,4 +1,5 @@
-﻿using Book_Store.Application.Features.Users.Requests.Queries;
+﻿using Book_Store.Application.DTOs.User;
+using Book_Store.Application.Features.Users.Requests.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,9 +30,10 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<UserDetailDto>> Get(int id)
         {
-            return "value";
+            var users = await _mediator.Send(new GetUserDetailRequest { Id = id });
+            return Ok(users);
         }
 
         // POST api/<UsersController>

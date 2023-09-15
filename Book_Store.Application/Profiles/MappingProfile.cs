@@ -93,6 +93,7 @@ namespace Book_Store.Application.Profiles
             #region User
 
             CreateMap<ApplicationUser, UserDto>().ReverseMap();
+            CreateMap<ApplicationUser, UserDetailDto>().ReverseMap();
 
             #endregion
 
