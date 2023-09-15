@@ -1,5 +1,7 @@
 ﻿using Book_Store.Application.DTOs.User;
+using Book_Store.Application.Features.Users.Requests.Commands;
 using Book_Store.Application.Features.Users.Requests.Queries;
+using Book_Store.Application.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,8 +19,6 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         {
             _mediator = mediator;
         }
-
-
 
         // GET: api/<UsersController>
         [HttpGet]
@@ -38,8 +38,15 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<BaseCommandResponse>> Post([FromBody] CreateUserDto createUser)
         {
+            var command = new CreateUserCommand { CreateUserDto = createUser };
+            var response = await _mediator.Send(command);
+
+            if (!response.Success)
+                return BadRequest(response.Errors);
+
+            return Ok(response);
         }
 
         // PUT api/<UsersController>/5

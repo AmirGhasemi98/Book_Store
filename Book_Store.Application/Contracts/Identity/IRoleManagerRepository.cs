@@ -6,6 +6,8 @@ namespace Book_Store.Application.Contracts.Identity
     {
         Task<List<IdentityRole<int>>> GetList();
 
+        Task<List<IdentityRole<int>>> GetList(List<int> ids);
+
         Task<IdentityRole<int>> Get(int id);
 
         Task<(List<string>, bool)> Create(IdentityRole<int> role);

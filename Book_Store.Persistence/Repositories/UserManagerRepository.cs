@@ -72,9 +72,9 @@ namespace Book_Store.Persistence.Repositories
         {
             List<string> messages = new List<string>();
 
-            var allRoles = await _roleManager.Roles.ToListAsync();
+            var userRoles = await GetUserRoles(user);
 
-            var removeResult = await _userManager.RemoveFromRolesAsync(user, allRoles.Select(x => x.Name));
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles.Select(x => x.Name));
 
             if (!removeResult.Succeeded)
             {

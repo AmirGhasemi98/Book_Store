@@ -17,6 +17,11 @@ namespace Book_Store.Persistence.Repositories
             return _roleManager.Roles.ToList();
         }
 
+        public async Task<List<IdentityRole<int>>> GetList(List<int> ids)
+        {
+            return _roleManager.Roles.Where(r => ids.Contains(r.Id)).ToList();
+        }
+
         public async Task<IdentityRole<int>> Get(int id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
