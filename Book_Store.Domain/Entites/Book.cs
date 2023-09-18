@@ -32,6 +32,8 @@ namespace Book_Store.Domain.Entites
 
         public ICollection<BookMapTranslator> bookMapTranslators { get; set; }
 
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
         #endregion
 
     }
