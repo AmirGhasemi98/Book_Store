@@ -1,4 +1,5 @@
-﻿using Book_Store.Application.Features.Books.Requests.Queries;
+﻿using Book_Store.Application.Enums.Books;
+using Book_Store.Application.Features.Books.Requests.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,20 +19,15 @@ namespace Book_Store.Api.Areas.User.Controllers
 
 
 
-        // GET: api/<HomeController>
+        
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<HomeController>/5
-        [HttpGet("GetList")]
-        public async Task<IActionResult> GetList(int? categoryId)
-        {
-            var books = await _mediator.Send(new GetBookListByCategoryRequest { CategoryId = categoryId });
-            return Ok(books);
-        }
+       
+       
 
         // POST api/<HomeController>
         [HttpPost]

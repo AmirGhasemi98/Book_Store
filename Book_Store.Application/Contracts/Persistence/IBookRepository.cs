@@ -1,4 +1,5 @@
-﻿using Book_Store.Domain.Entites;
+﻿using Book_Store.Application.Enums.Books;
+using Book_Store.Domain.Entites;
 
 namespace Book_Store.Application.Contracts.Persistence
 {
@@ -8,6 +9,6 @@ namespace Book_Store.Application.Contracts.Persistence
 
         Task<Book> GetBookWithDetaile(int id);
 
-        Task<List<Book>> GetBookListByCategory(int? categoryId);
+        Task<List<Book>> GetBookListByType(int? Id, GetBooksType? type);
     }
 }

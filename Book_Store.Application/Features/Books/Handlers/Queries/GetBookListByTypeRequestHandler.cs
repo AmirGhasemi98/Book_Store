@@ -6,20 +6,20 @@ using MediatR;
 
 namespace Book_Store.Application.Features.Books.Handlers.Queries
 {
-    public class GetBookListByCategoryRequestHandler : IRequestHandler<GetBookListByCategoryRequest, List<BookListDto>>
+    public class GetBookListByTypeRequestHandler : IRequestHandler<GetBookListByTypeRequest, List<BookListDto>>
     {
         private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
 
-        public GetBookListByCategoryRequestHandler(IBookRepository bookRepository, IMapper mapper)
+        public GetBookListByTypeRequestHandler(IBookRepository bookRepository, IMapper mapper)
         {
             _bookRepository = bookRepository;
             _mapper = mapper;
         }
 
-        public async Task<List<BookListDto>> Handle(GetBookListByCategoryRequest request, CancellationToken cancellationToken)
+        public async Task<List<BookListDto>> Handle(GetBookListByTypeRequest request, CancellationToken cancellationToken)
         {
-            var books = await _bookRepository.GetBookListByCategory(request.CategoryId);
+            var books = await _bookRepository.GetBookListByType(request.Id, request.Type);
             return _mapper.Map<List<BookListDto>>(books);
         }
     }

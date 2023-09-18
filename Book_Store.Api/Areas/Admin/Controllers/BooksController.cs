@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Store.Api.Areas.Admin.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Area]/[controller]")]
     [ApiController]
     [Area("Admin")]
     public class BooksController : ControllerBase

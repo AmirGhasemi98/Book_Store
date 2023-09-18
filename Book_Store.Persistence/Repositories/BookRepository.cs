@@ -1,4 +1,5 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
+using Book_Store.Application.Enums.Books;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,12 +14,29 @@ namespace Book_Store.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Book>> GetBookListByCategory(int? categoryId)
+        public async Task<List<Book>> GetBookListByType(int? id, GetBooksType? type)
         {
             var query = _context.Books.AsNoTracking();
 
-            if (categoryId.HasValue)
-                query = query.Where(x => x.CategoryId == categoryId);
+            if (id.HasValue)
+            {
+                switch (type)
+                {
+                    case GetBooksType.Category:
+                        query = query.Where(x => x.CategoryId == id);
+                        break;
+                    case GetBooksType.Publisher:
+                        query = query.Where(x => x.PublisherId == id);
+                        break;
+                    case GetBooksType.Author:
+                        query = query.Where(x => x.bookMapAuthors.Any(a => a.AuthorId == id));
+                        break;
+                    default:
+                        query = query.Where(x => x.CategoryId == id);
+                        break;
+                }
+            }
+
 
             return await query.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).ToListAsync();
         }
