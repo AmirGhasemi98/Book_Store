@@ -12,6 +12,8 @@ namespace Book_Store.Application.DTOs.Book
 
         public string Description { get; set; }
 
+        public string Summary { get; set; }
+
         public double? Price { get; set; }
 
         public int Inventory { get; set; }
