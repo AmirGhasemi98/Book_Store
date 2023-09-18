@@ -8,6 +8,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Area("Admin")]
     public class BooksController : ControllerBase
     {
         private readonly IMediator _mediator;
