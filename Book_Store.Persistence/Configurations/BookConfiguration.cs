@@ -15,6 +15,7 @@ namespace Book_Store.Persistence.Configurations
             builder.Property(b => b.Title).HasMaxLength(100).IsRequired();
             builder.Property(b => b.Inventory).IsRequired();
             builder.Property(b => b.Description).IsRequired();
+            builder.Property(b => b.Summary).IsRequired(false);
 
             builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId).IsRequired();
             builder.HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId).IsRequired();
