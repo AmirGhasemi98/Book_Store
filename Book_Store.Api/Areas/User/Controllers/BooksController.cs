@@ -1,5 +1,4 @@
-﻿using Book_Store.Application.Enums.Books;
-using Book_Store.Application.Features.BookImages.Requests.Queries;
+﻿using Book_Store.Application.Features.BookImages.Requests.Queries;
 using Book_Store.Application.Features.Books.Requests.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,29 +32,29 @@ namespace Book_Store.Api.Areas.User.Controllers
             return File(image.File, image.ContentType, image.FileName);
         }
 
-        // GET api/<BooksController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+    //    // GET api/<BooksController>/5
+    //    [HttpGet("{id}")]
+    //    public string Get(int id)
+    //    {
+    //        return "value";
+    //    }
 
-        // POST api/<BooksController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+    //    // POST api/<BooksController>
+    //    [HttpPost]
+    //    public void Post([FromBody] string value)
+    //    {
+    //    }
 
-        // PUT api/<BooksController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+    //    // PUT api/<BooksController>/5
+    //    [HttpPut("{id}")]
+    //    public void Put(int id, [FromBody] string value)
+    //    {
+    //    }
 
-        // DELETE api/<BooksController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-    }
+    //    // DELETE api/<BooksController>/5
+    //    [HttpDelete("{id}")]
+    //    public void Delete(int id)
+    //    {
+    //    }
+    //}
 }
