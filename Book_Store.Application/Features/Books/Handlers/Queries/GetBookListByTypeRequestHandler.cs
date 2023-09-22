@@ -19,7 +19,7 @@ namespace Book_Store.Application.Features.Books.Handlers.Queries
 
         public async Task<List<BookListDto>> Handle(GetBookListByTypeRequest request, CancellationToken cancellationToken)
         {
-            var books = await _bookRepository.GetBookListByType(request.Id, request.Type);
+            var books = await _bookRepository.GetBookListByType(request.CategoryId, request.PublisherId, request.AuthorId);
             return _mapper.Map<List<BookListDto>>(books);
         }
     }

@@ -19,9 +19,9 @@ namespace Book_Store.Api.Areas.User.Controllers
         }
 
         [HttpGet("GetList")]
-        public async Task<IActionResult> GetList(int? id, GetBooksType? type)
+        public async Task<IActionResult> GetList(int? categoryId, int? publisherId, int? authorId)
         {
-            var books = await _mediator.Send(new GetBookListByTypeRequest { Id = id, Type = type });
+            var books = await _mediator.Send(new GetBookListByTypeRequest { CategoryId = categoryId, PublisherId = publisherId, AuthorId = authorId });
             return Ok(books);
         }
 

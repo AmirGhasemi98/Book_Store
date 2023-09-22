@@ -14,29 +14,18 @@ namespace Book_Store.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Book>> GetBookListByType(int? id, GetBooksType? type)
+        public async Task<List<Book>> GetBookListByType(int? categoryId, int? publisherId, int? authorId)
         {
             var query = _context.Books.AsNoTracking();
 
-            if (id.HasValue)
-            {
-                switch (type)
-                {
-                    case GetBooksType.Category:
-                        query = query.Where(x => x.CategoryId == id);
-                        break;
-                    case GetBooksType.Publisher:
-                        query = query.Where(x => x.PublisherId == id);
-                        break;
-                    case GetBooksType.Author:
-                        query = query.Where(x => x.bookMapAuthors.Any(a => a.AuthorId == id));
-                        break;
-                    default:
-                        query = query.Where(x => x.CategoryId == id);
-                        break;
-                }
-            }
+            if (categoryId.HasValue)
+                query = query.Where(b => b.CategoryId == categoryId);
 
+            if (publisherId.HasValue)
+                query = query.Where(b => b.PublisherId == publisherId);
+
+            if (authorId.HasValue)
+                query = query.Where(b => _context.BookMapAuthors.Any(ba => ba.BookId == b.Id && ba.AuthorId == authorId));
 
             return await query.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).ToListAsync();
         }
