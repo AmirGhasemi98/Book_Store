@@ -4,6 +4,7 @@ using Book_Store.Application.DTOs.Book;
 using Book_Store.Application.DTOs.BookImage;
 using Book_Store.Application.DTOs.Category;
 using Book_Store.Application.DTOs.Comment;
+using Book_Store.Application.DTOs.Order;
 using Book_Store.Application.DTOs.Publisher;
 using Book_Store.Application.DTOs.Role;
 using Book_Store.Application.DTOs.Translator;
@@ -11,6 +12,7 @@ using Book_Store.Application.DTOs.User;
 using Book_Store.Domain.Entites;
 using Book_Store.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Reflection.Emit;
 
 namespace Book_Store.Application.Profiles
 {
@@ -96,6 +98,22 @@ namespace Book_Store.Application.Profiles
             CreateMap<ApplicationUser, UserDetailDto>().ReverseMap();
             CreateMap<ApplicationUser, CreateUserDto>().ReverseMap();
             CreateMap<ApplicationUser, UpdateUserDto>().ReverseMap();
+
+            #endregion
+
+            #region Order
+
+            CreateMap<Order, UserOpenOrderDTO>()
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.OrderDetails));
+
+            CreateMap<OrderDetail, UserOpenOrderDetailItemDTO>()
+                .ForMember(dest => dest.DetailId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count))
+                .ForMember(dest => dest.BookId, opt => opt.MapFrom(src => src.BookId))
+                .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
+                .ForMember(dest => dest.BookPrice, opt => opt.MapFrom(src => src.Book.Price));
+
 
             #endregion
 

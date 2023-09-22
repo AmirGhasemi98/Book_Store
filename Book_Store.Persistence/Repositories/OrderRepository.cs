@@ -58,5 +58,14 @@ namespace Book_Store.Persistence.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task<Order> GetUserOpenOrderDetail(int userId)
+        {
+            var userOpenOrder = await GetUserLatestOpenOrder(userId);
+
+            return userOpenOrder;
+
+
+        }
     }
 }
