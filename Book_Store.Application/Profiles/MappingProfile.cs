@@ -114,6 +114,8 @@ namespace Book_Store.Application.Profiles
                 .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title))
                 .ForMember(dest => dest.BookPrice, opt => opt.MapFrom(src => src.Book.Price));
 
+            CreateMap<OrderDetail, AddBookToOrderDto>().ReverseMap();
+
 
             #endregion
 

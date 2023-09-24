@@ -44,7 +44,7 @@ namespace Book_Store.Application.Features.Categories.Handlers.Commands
             {
                 response.Success = false;
                 response.Message = "دسته بندی یافت نشد.";
-                response.Errors.Add("انتشارات یافت نشد.");
+                response.Errors.Add("دسته بندی یافت نشد.");
 
                 return response;
             }

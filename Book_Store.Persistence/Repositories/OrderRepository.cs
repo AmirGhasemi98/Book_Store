@@ -1,5 +1,4 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Application.DTOs.Order;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,22 +33,17 @@ namespace Book_Store.Persistence.Repositories
 
         }
 
-        public async Task AddProductToOpenOrder(int userId, AddBookToOrderDto order)
+        public async Task AddProductToOpenOrder(int userId, OrderDetail order)
         {
             var openOrder = await GetUserLatestOpenOrder(userId);
 
-            var similarOrder = openOrder.OrderDetails.SingleOrDefault(o => o.BookId == order.BookId);
+            var similarOrder = _context.OrderDetails.SingleOrDefault(o => o.BookId == order.BookId);
 
             if (similarOrder is null)
             {
-                var orderDetail = new OrderDetail
-                {
-                    OrderId = openOrder.Id,
-                    BookId = order.BookId,
-                    Count = order.Count
-                };
+                order.OrderId = openOrder.Id;
 
-                await _context.OrderDetails.AddAsync(orderDetail);
+                await _context.OrderDetails.AddAsync(order);
                 await _context.SaveChangesAsync();
             }
             else

@@ -17,8 +17,8 @@ namespace Book_Store.Persistence.Configurations
             builder.Property(b => b.Description).IsRequired();
             builder.Property(b => b.Summary).IsRequired(false);
 
-            builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId).IsRequired();
-            builder.HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId).IsRequired();
+            builder.HasOne(b => b.Category).WithMany(c => c.Books).HasForeignKey(b => b.CategoryId).IsRequired().OnDelete(DeleteBehavior.NoAction); ;
+            builder.HasOne(b => b.Publisher).WithMany(p => p.Books).HasForeignKey(b => b.PublisherId).IsRequired().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
