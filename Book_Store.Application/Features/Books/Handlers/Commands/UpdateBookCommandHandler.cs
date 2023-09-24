@@ -3,6 +3,7 @@ using Book_Store.Application.Contracts.Persistence;
 using Book_Store.Application.DTOs.Book.Validators;
 using Book_Store.Application.DTOs.BookMapAuthor;
 using Book_Store.Application.DTOs.BookMapTranslator;
+using Book_Store.Application.Features.BookImages.Requests.Commands;
 using Book_Store.Application.Features.BookMapAuthors.Requests.Commands;
 using Book_Store.Application.Features.BookMapTranslators.Requests.Commands;
 using Book_Store.Application.Features.Books.Requests.Commands;
@@ -63,6 +64,8 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
             _mapper.Map(request.UpdateBookDto, book);
             await _bookRepository.Update(book);
 
+            #region Book Authors
+
             if (request.UpdateBookDto.AuthorIds is not null && request.UpdateBookDto.AuthorIds.Any())
             {
                 var bookAuthorsResponse = await _mediator.Send(new CreateBookAuthorCommand
@@ -81,6 +84,10 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                     return response;
                 }
             }
+
+            #endregion
+
+            #region Book Translators
 
             if (request.UpdateBookDto.TranslatorIds is not null && request.UpdateBookDto.TranslatorIds.Any())
             {
@@ -104,6 +111,24 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                     return response;
                 }
             }
+
+            #endregion
+
+            #region Book Image
+
+            if (request.UpdateBookDto.BookImage is not null)
+            {
+                var bookImageResponse = await _mediator.Send(new UpdateBookImageCommand
+                {
+                    UpdateBookImage = new DTOs.BookImage.UpdateBookImageDto
+                    { BookId = book.Id, Image = request.UpdateBookDto.BookImage }
+                });
+
+                response.Errors.AddRange(bookImageResponse.Errors);
+
+            }
+
+            #endregion
 
             response.Success = true;
             response.Message = "عملیات با موفقیت انجام شد.";

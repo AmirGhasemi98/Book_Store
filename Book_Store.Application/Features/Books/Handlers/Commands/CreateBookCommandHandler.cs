@@ -109,6 +109,7 @@ namespace Book_Store.Application.Features.Books.Handlers.Commands
                 });
 
                 response.Errors.AddRange(bookImageResponse.Errors);
+
             }
 
             await _bookRepository.CommitTransactionAsync();
