@@ -50,8 +50,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
             return Ok(response);
         }
 
-        // PUT api/<PublisherController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdatePublisherDto publisher)
         {
             var command = new UpdatePublisherCommand { UpdatePublisherDto = publisher, };
