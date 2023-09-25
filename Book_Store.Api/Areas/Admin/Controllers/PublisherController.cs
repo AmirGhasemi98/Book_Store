@@ -2,16 +2,15 @@
 using Book_Store.Application.Features.Publishers.Requests.Commands;
 using Book_Store.Application.Features.Publishers.Requests.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Book_Store.Api.Areas.Admin.Controllers
 {
     [Route("api/[Area]/[controller]")]
     [ApiController]
     [Area("Admin")]
-    //[Authorize(Roles = "Adminstrator")]
+    [Authorize(Roles = "Adminstrator")]
     public class PublisherController : ControllerBase
     {
         private readonly IMediator _mediator;

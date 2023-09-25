@@ -2,6 +2,7 @@
 using Book_Store.Application.Features.Authors.Requests.Commands;
 using Book_Store.Application.Features.Authors.Requests.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Store.Api.Areas.Admin.Controllers
@@ -9,7 +10,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
     [Route("api/[Area]/[controller]")]
     [ApiController]
     [Area("Admin")]
-    //[Authorize(Roles = "Adminstrator")]
+    [Authorize(Roles = "Adminstrator")]
     public class AuthorsController : ControllerBase
     {
         private readonly IMediator _mediator;
