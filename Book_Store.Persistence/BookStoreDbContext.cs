@@ -1,17 +1,22 @@
 ﻿using Book_Store.Domain.Common;
 using Book_Store.Domain.Entites;
 using Book_Store.Domain.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Book_Store.Persistence
 {
     public class BookStoreDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
-        public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options) : base(options)
-        {
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
+        public BookStoreDbContext(DbContextOptions<BookStoreDbContext> options, IHttpContextAccessor httpContextAccessor)
+            : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -43,7 +48,14 @@ namespace Book_Store.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
+            }
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookStoreDbContext).Assembly);
+
+
 
             //modelBuilder.ApplyConfiguration(new RoleConfiguration());
             //modelBuilder.ApplyConfiguration(new UserConfiguration());
@@ -59,12 +71,16 @@ namespace Book_Store.Persistence
             foreach (var entry in ChangeTracker.Entries<BaseDomainEntity>())
             {
                 if (entry.State == EntityState.Modified)
+                {
                     entry.Entity.ModifiedDate = DateTime.UtcNow;
+                    entry.Entity.ModifiedBy = GetCurrentUserFullName();
+                }
+
 
                 if (entry.State == EntityState.Added)
                 {
                     entry.Entity.DateCreated = DateTime.UtcNow;
-                    entry.Entity.CreatedBy = "Amir";
+                    entry.Entity.CreatedBy = GetCurrentUserFullName();
                 }
             }
 
@@ -83,6 +99,24 @@ namespace Book_Store.Persistence
             }
 
             return base.SaveChanges();
+        }
+
+        private string GetCurrentUserFullName()
+        {
+            var fullNameClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            //if (!string.IsNullOrEmpty(userId) && int.TryParse(userId, out int parsedUserId))
+            //{
+            //    return parsedUserId;
+            //}
+
+            if (!string.IsNullOrEmpty(fullNameClaim))
+            {
+                return fullNameClaim;
+            }
+
+            // Handle the case where the user ID is not found or not valid
+            throw new ApplicationException("User ID not found or invalid.");
         }
 
     }

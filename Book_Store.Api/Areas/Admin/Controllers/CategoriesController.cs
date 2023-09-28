@@ -10,7 +10,7 @@ namespace Book_Store.Api.Areas.Admin.Controllers
     [Route("api/[Area]/[controller]")]
     [ApiController]
     [Area("Admin")]
-    [Authorize(Roles = "Adminstrator")]
+    //[Authorize(Roles = "Adminstrator")]
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
