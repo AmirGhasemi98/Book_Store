@@ -21,7 +21,7 @@ namespace Book_Store.Infrastructure.Extentions
             return default(int);
         }
 
-        public static long GetUserId(this IPrincipal principal)
+        public static int GetUserId(this IPrincipal principal)
         {
             var user = (ClaimsPrincipal)principal;
             return user.GetUserId();
