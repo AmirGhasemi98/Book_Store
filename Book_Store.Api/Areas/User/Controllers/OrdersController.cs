@@ -1,5 +1,6 @@
 ﻿using Book_Store.Application.DTOs.Order;
 using Book_Store.Application.Features.Orders.Requests.Commands;
+using Book_Store.Application.Features.Orders.Requests.Queries;
 using Book_Store.Infrastructure.Controller;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,8 @@ namespace Book_Store.Api.Areas.User.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                var test = UserId;
+
                 var command = new AddBookToOpenOrderCommand { AddBookToOrder = addBookToOrder, UserId = UserId };
                 var response = await _mediator.Send(command);
 
@@ -38,7 +41,7 @@ namespace Book_Store.Api.Areas.User.Controllers
 
 
         [HttpGet("ChangeDetailCount")]
-        public async Task<IActionResult> ChangeDetailCount(OrderDetailCountDto detailCountDto)
+        public async Task<IActionResult> ChangeDetailCount([FromQuery] OrderDetailCountDto detailCountDto)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -73,16 +76,12 @@ namespace Book_Store.Api.Areas.User.Controllers
             }
         }
 
-        // PUT api/<OrdersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("UserOpenOrder")]
+        public async Task<IActionResult> UserOpenOrder()
         {
+            var order = await _mediator.Send(new GetUserOpenOrderDetailRequest { UserId = UserId });
+            return Ok(order);
         }
 
-        // DELETE api/<OrdersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

@@ -12,7 +12,8 @@ namespace Book_Store.Persistence.Configurations
 
             builder.HasKey(o => o.Id);
 
-            builder.Property(o => o.TracingCode).HasMaxLength(300);
+            builder.Property(o => o.TracingCode).HasMaxLength(300).IsRequired(false);
+            builder.Property(o => o.Description).IsRequired(false);
 
             builder.HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId).IsRequired();
         }

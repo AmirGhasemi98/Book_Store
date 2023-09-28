@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Book_Store.Application.Constance;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ namespace Book_Store.Infrastructure.Extentions
         {
             if (claimsPrincipal != null)
             {
-                var data = claimsPrincipal.Claims.SingleOrDefault(s => s.Type == ClaimTypes.NameIdentifier);
+                var data = claimsPrincipal.Claims.SingleOrDefault(s => s.Type == CustomClaimTypes.Uid);
                 if (data != null) return Convert.ToInt32(data.Value);
             }
 

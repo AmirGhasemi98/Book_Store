@@ -104,7 +104,7 @@ namespace Book_Store.Application.Profiles
             #region Order
 
             CreateMap<Order, UserOpenOrderDTO>()
-                .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.Details, opt => opt.MapFrom(src => src.OrderDetails));
 
             CreateMap<OrderDetail, UserOpenOrderDetailItemDTO>()

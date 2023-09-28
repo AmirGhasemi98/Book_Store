@@ -9,6 +9,8 @@ namespace Book_Store.Application.Contracts.Persistence
 
         Task AddProductToOpenOrder(int userId, OrderDetail order);
 
+        Task<Order> GetUserOpenOrderDetail(int userId);
+
         Task ChangeOrderDetailCount(OrderDetailCountDto detailCountDto, int userId);
 
         Task<bool> RemoveOrderDetail(int detailId, int userId);

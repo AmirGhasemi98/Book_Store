@@ -30,8 +30,6 @@
     <Folder Include="Features\NewFolder\Handlers\Queries\" />
     <Folder Include="Features\NewFolder\Requests\Commands\" />
     <Folder Include="Features\NewFolder\Requests\Queries\" />
-    <Folder Include="Features\Orders\Handlers\Queries\" />
-    <Folder Include="Features\Orders\Requests\Queries\" />
   </ItemGroup>
 
 </Project>
