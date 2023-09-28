@@ -1,4 +1,5 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
+using Book_Store.Application.DTOs.Order;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,6 +61,39 @@ namespace Book_Store.Persistence.Repositories
             return userOpenOrder;
 
 
+        }
+
+        public async Task ChangeOrderDetailCount(OrderDetailCountDto detailCountDto, int userId)
+        {
+            var userOpenOrder = await GetUserLatestOpenOrder(userId);
+
+            var detail = userOpenOrder.OrderDetails.SingleOrDefault(x => x.Id == detailCountDto.DetailId);
+
+            if (detail is not null)
+            {
+                if (detailCountDto.Count > 0)
+                    detail.Count = detailCountDto.Count;
+                else
+                    _context.OrderDetails.Remove(detail);
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> RemoveOrderDetail(int detailId, int userId)
+        {
+            var userOpenOrder = await GetUserLatestOpenOrder(userId);
+
+            var orderDetail = userOpenOrder.OrderDetails.SingleOrDefault(s => s.Id == detailId);
+
+            if (orderDetail is null)
+                return false;
+
+            _context.OrderDetails.Remove(orderDetail);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

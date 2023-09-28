@@ -1,15 +1,15 @@
 ﻿using Book_Store.Application.DTOs.Order;
 using Book_Store.Application.Features.Orders.Requests.Commands;
+using Book_Store.Infrastructure.Controller;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography.Xml;
 
 namespace Book_Store.Api.Areas.User.Controllers
 {
     [Route("api/[Area]/[controller]")]
     [ApiController]
     [Area("User")]
-    public class OrdersController : ControllerBase
+    public class OrdersController : BaseApiController
     {
 
         private readonly IMediator _mediator;
@@ -19,15 +19,16 @@ namespace Book_Store.Api.Areas.User.Controllers
             _mediator = mediator;
         }
 
-        
-        [HttpGet]
+
+        [HttpPost]
         public async Task<IActionResult> AddBookToOrder(AddBookToOrderDto addBookToOrder)
         {
             if (User.Identity.IsAuthenticated)
             {
-                    //var command = new AddBookToOpenOrderCommand {  AddBookToOrder= addBookToOrder,UserId=User.Get };
+                var command = new AddBookToOpenOrderCommand { AddBookToOrder = addBookToOrder, UserId = UserId };
+                var response = await _mediator.Send(command);
 
-                return Ok("hi");
+                return Ok("کتاب مورد نظر با موفقیت ثبت شد.");
             }
             else
             {
@@ -35,17 +36,41 @@ namespace Book_Store.Api.Areas.User.Controllers
             }
         }
 
-        // GET api/<OrdersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [HttpGet("ChangeDetailCount")]
+        public async Task<IActionResult> ChangeDetailCount(OrderDetailCountDto detailCountDto)
         {
-            return "value";
+            if (User.Identity.IsAuthenticated)
+            {
+                var command = new ChangeOrderDetailCountCommand { DetailCountDto = detailCountDto, UserId = UserId };
+                var response = await _mediator.Send(command);
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("ابتدا باید وارد سایت شوید");
+            }
         }
 
-        // POST api/<OrdersController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+        [HttpGet("RemoveBookFromOrder")]
+        public async Task<IActionResult> RemoveBookFromOrder(int detailId)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var command = new RemoveOrderDetailCommand { detailId = detailId, UserId = UserId };
+                var response = await _mediator.Send(command);
+
+                if (!response.Success)
+                    return BadRequest(response.Errors);
+
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest("ابتدا باید وارد سایت شوید");
+            }
         }
 
         // PUT api/<OrdersController>/5
