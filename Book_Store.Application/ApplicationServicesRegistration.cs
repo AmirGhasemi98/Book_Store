@@ -11,6 +11,8 @@ namespace Book_Store.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+            
         }
     }
 }

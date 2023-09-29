@@ -1,5 +1,6 @@
 using Book_Store.Api;
 using Book_Store.Application;
+using Book_Store.Application.Schedules;
 using Book_Store.Persistence;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.ConfigureApplicationServices();
 builder.Services.ConfigurePersistenceServices(builder.Configuration);
+builder.Services.SchedulStart();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();

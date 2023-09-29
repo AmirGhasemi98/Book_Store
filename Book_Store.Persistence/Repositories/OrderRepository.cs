@@ -95,5 +95,16 @@ namespace Book_Store.Persistence.Repositories
 
             return true;
         }
+
+        public void DeleteLastOrders()
+        {
+            var orders =  _context.Orders.Where(x => !x.IsPaid && x.DateCreated > DateTime.Now.AddHours(-24)).ToList();
+
+            _context.OrderDetails.Where(x => orders.Select(o => o.Id).Contains(x.OrderId)).ToList().ForEach(x => _context.Remove(x));
+
+            _context.RemoveRange(orders);
+
+            _context.SaveChangesAsync();
+        }
     }
 }
