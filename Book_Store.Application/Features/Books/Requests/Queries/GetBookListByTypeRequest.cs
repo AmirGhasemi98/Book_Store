@@ -5,10 +5,12 @@ namespace Book_Store.Application.Features.Books.Requests.Queries
 {
     public class GetBookListByTypeRequest : IRequest<List<BookListDto>>
     {
-        public int? CategoryId { get; set; }
+        public string? q { get; set; }
 
-        public int? PublisherId { get; set; }
+        public List<int>? CategoryId { get; set; }
 
-        public int? AuthorId { get; set; }
+        public List<int>? PublisherId { get; set; }
+
+        public List<int>? AuthorId { get; set; }
     }
 }

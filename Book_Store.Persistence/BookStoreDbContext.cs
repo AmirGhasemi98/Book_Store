@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Security.Claims;
 
 namespace Book_Store.Persistence
@@ -17,6 +18,7 @@ namespace Book_Store.Persistence
             : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
+            ChangeTracker.LazyLoadingEnabled = false;
         }
 
         public DbSet<Category> Categories { get; set; }

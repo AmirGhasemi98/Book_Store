@@ -1,5 +1,4 @@
 ﻿using Book_Store.Application.Contracts.Persistence;
-using Book_Store.Application.Enums.Books;
 using Book_Store.Domain.Entites;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,18 +13,21 @@ namespace Book_Store.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<Book>> GetBookListByType(int? categoryId, int? publisherId, int? authorId)
+        public async Task<List<Book>> GetBookListByType(string? q, List<int>? categoryIds, List<int>? publisherIds, List<int>? authorIds)
         {
             var query = _context.Books.AsNoTracking();
 
-            if (categoryId.HasValue)
-                query = query.Where(b => b.CategoryId == categoryId);
+            if (categoryIds is not null && categoryIds.Any())
+                query = query.Where(b => categoryIds.Contains(b.CategoryId));
 
-            if (publisherId.HasValue)
-                query = query.Where(b => b.PublisherId == publisherId);
+            if (publisherIds is not null && publisherIds.Any())
+                query = query.Where(b => publisherIds.Contains(b.PublisherId));
 
-            if (authorId.HasValue)
-                query = query.Where(b => _context.BookMapAuthors.Any(ba => ba.BookId == b.Id && ba.AuthorId == authorId));
+            if (authorIds is not null && authorIds.Any())
+                query = query.Where(b => _context.BookMapAuthors.Any(ba => ba.BookId == b.Id && authorIds.Contains(ba.AuthorId)));
+
+            if (!string.IsNullOrWhiteSpace(q))
+                query = query.Where(b => b.Title.Contains(q));
 
             return await query.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).ToListAsync();
         }
@@ -39,7 +41,7 @@ namespace Book_Store.Persistence.Repositories
         public async Task<Book> GetBookWithDetaile(int id)
         {
             return await _context.Books.Include(b => b.bookMapAuthors).ThenInclude(a => a.Author).Include(b => b.Publisher)
-                .Include(b => b.Category).FirstOrDefaultAsync(b => b.Id == id);
+                .Include(b => b.Category).Include(b => b.bookMapTranslators).ThenInclude(t => t.Translator).FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

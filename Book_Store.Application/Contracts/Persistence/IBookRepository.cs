@@ -8,6 +8,6 @@ namespace Book_Store.Application.Contracts.Persistence
 
         Task<Book> GetBookWithDetaile(int id);
 
-        Task<List<Book>> GetBookListByType(int? categoryId, int? publisherId, int? authorId);
+        Task<List<Book>> GetBookListByType(string? q, List<int>? categoryIds, List<int>? publisherIds, List<int>? authorIds);
     }
 }

@@ -1,15 +1,11 @@
 ﻿using Book_Store.Application.Features.BookImages.Requests.Queries;
-using Book_Store.Infrastructure.Extentions;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Book_Store.Api.Areas.Admin.Controllers
+namespace Book_Store.Api.Controllers
 {
-    [Route("api/[Area]/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    [Area("Admin")]
-    [Authorize(Roles = "Adminstrator")]
     public class BookImagesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -27,6 +23,5 @@ namespace Book_Store.Api.Areas.Admin.Controllers
 
             return File(image.File, image.ContentType, image.FileName);
         }
-
     }
 }
