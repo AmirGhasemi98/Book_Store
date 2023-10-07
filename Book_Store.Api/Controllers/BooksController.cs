@@ -17,9 +17,9 @@ namespace Book_Store.Api.Controllers
         }
 
         [HttpGet("GetList")]
-        public async Task<IActionResult> GetList(string? q, List<int>? categoryId, List<int>? publisherId, List<int>? authorId)
+        public async Task<IActionResult> GetList([FromQuery] GetBookListByTypeRequest Request)
         {
-            var books = await _mediator.Send(new GetBookListByTypeRequest { q = q, CategoryId = categoryId, PublisherId = publisherId, AuthorId = authorId });
+            var books = await _mediator.Send(Request);
             return Ok(books);
         }
 
