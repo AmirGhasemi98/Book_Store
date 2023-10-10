@@ -50,8 +50,8 @@ namespace Book_Store.Api.Areas.Admin.Controllers
         }
 
         // PUT api/<BooksController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put([FromBody] UpdateBookDto book)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromForm] UpdateBookDto book)
         {
             var command = new UpdateBookCommand { UpdateBookDto = book };
             var response = await _mediator.Send(command);
